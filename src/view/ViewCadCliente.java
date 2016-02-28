@@ -1,242 +1,391 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package view;
 
-import javax.swing.*;//importa todos os componentes do pacote swing
-import javax.swing.event.*;//importa todos os eventos do pacote swing
-import javax.swing.text.MaskFormatter;
-
-import java.awt.*;//importa todos os componentes do pacote awt
-import java.awt.event.*;//importa todos os eventos do pacote awt
-import java.text.ParseException;
-import java.util.*;//importa todos os componente do pacote util
+import controller.ControllerCadCliente;//controle de cadastro de cliente
+import java.util.ArrayList;
 import java.util.List;
-
-import model.*;//importa os modelos do banco de dados
-import controller.*;//importa os controle do banco
-import util.*;//importa componentes uteis para apliçao
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import model.ModelCadCliente;//Modelo de cliente dabase de dados
+import util.ModeloTabela;
 
 /**
- * 
+ *
  * @author wellington
  */
+public class ViewCadCliente extends javax.swing.JFrame {
 
-/**
- * Falta validar CPF e Email
- * Implementa as informações ao combobox
- * Verificar campo
- * Titulo dinamico da janela
- * 
-*/
-
-//class ViewCadCliente herda JFrame para a construçao das telas
-public class ViewCadCliente extends JFrame{
-
-    private Container c;//Declara o container da tela
-    private JTextField textField, txtcodigo, txtnome, txtendereco, txtcep;
-    private JTextField txtnumcasa, txttelefone, txtcelular, txtcomplemento;
-    private JTextField txtcpf,txtemail, txtpesquisa;
-    private JComboBox cbbairro, cbcidade, cbuf;
-    private JButton btpesquisa;
-    private JButton btcancelar;
-    private JButton btexcluir;
-    private JButton btalterar;
-    private JButton btnovo;
-    private JButton btsalva;
-    private MaskFormatter cep;
-    private MaskFormatter cpf;
-    private MaskFormatter tel, cel;
-    private JTable table;
-    
     private String funcao = "salvar";
     private String funcao2;
     
-	
     private ModelCadCliente mCadCliente;//Declarando o modelo do banco cliente
-    private ControllerCadCliente cCadCliente;//Declanrando o controle do banco
-	
-    //metodo construtor
+    private ControllerCadCliente cCadCliente;
+    
+    /**
+     * Creates new form ViewCadCliente
+     */
     public ViewCadCliente() {
-	super("Cadastro de Cliente");//titulo da janela
-	setSize(633,481);//tamanho da tela
-	setLocationRelativeTo(null);//deixa a janela no centro
-	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//fechar a janela
-	setResizable(false);//para a tela não ser maximizada
-	c = getContentPane();//inicia o container
-	c.setLayout(null); //posicao do layout absoluta
-		
-	//Declarando e iniciando os rotulos 
-	JLabel lbcodigo = new JLabel("Código:");
-	JLabel lbnome = new JLabel("Nome Completo:");
-	JLabel lbcpf = new JLabel("CPF:");
-	JLabel lbemail = new JLabel("E-mail:");
-	JLabel lbtelefone = new JLabel("Telefone:");
-	JLabel lbcelular = new JLabel("Celular:");
-	JLabel lbendereco = new JLabel("Endereço:");
-	JLabel lbnumcasa = new JLabel("Nº:");
-	JLabel lbcomplemento = new JLabel("Complemento:");
-	JLabel lbbairro = new JLabel("Bairro:");
-	JLabel lbcidade = new JLabel("Cidade:");
-	JLabel lbuf = new JLabel("UF:");
-	JLabel lbcep = new JLabel("CEP:");
-	JLabel lbpesquisa = new JLabel("Pesquisa:");
-	
-        try {
-            //mascaras de campo
-            cep = new MaskFormatter("#####-###");
-            //so aceita numeros
-            cep.setValidCharacters("0123456789");
-            cpf = new MaskFormatter("###.###.###-##");
-            cpf.setValidCharacters("0123456789");
-            cel = new MaskFormatter("(##)#####-####");
-            cel.setValidCharacters("0123456789");
-            tel = new MaskFormatter("(##)#####-####");
-            tel.setValidCharacters("0123456789");
-        } catch (ParseException se) {
-            JOptionPane.showMessageDialog(null, "Aviso: " + se.getMessage());
-        }
-	//Inciando o campos de texto
-	txtcodigo = new JTextField();
-        txtcodigo.setEditable(false);//desabilitar campo de texto
-	txtnome = new JTextFieldSomenteLetras();//forca somente letra
-        txtcpf = new JFormattedTextField(cpf);//cpf mascara para cpf
-	txtemail = new JTextField();
-	txtendereco = new JTextFieldSomenteLetras();//forca somente letra
-	txtnumcasa = new JTextFieldSomenteNumeros();//forca a aceitar so numero
-	txtcomplemento = new JTextFieldSomenteLetras();//forca somente letra
-        txttelefone = new JFormattedTextField(tel);//tel mascara para telefone   
-        txtcelular = new JFormattedTextField(cel);//cel mascara para telefone celular
-        txtcep = new JFormattedTextField(cep);//cep mascara para cep
-	txtpesquisa = new JTextField();
-		
-	//Inciando combobox
-	cbbairro = new JComboBox();
-	cbcidade = new JComboBox();
-	cbuf = new JComboBox();
-		
-	//Declarando e iniciando os botaos
-	btpesquisa = new JButton("Pesquisa");
-	btcancelar = new JButton("Cancelar");
-	btexcluir = new JButton("Excluir");
-	btalterar = new JButton("Alterar");
-	btnovo = new JButton("Novo");
-	btsalva = new JButton("Salvar");
-		
-	//posições dos rotulos
-	lbcodigo.setBounds(12, 12, 70, 15);
-	lbnome.setBounds(138, 12, 150, 15);
-	lbendereco.setBounds(12, 102, 82, 15);
-	lbbairro.setBounds(12, 147, 70, 15);
-	lbcidade.setBounds(157, 147, 70, 15);
-	lbnumcasa.setBounds(280, 102, 40, 15);
-	lbtelefone.setBounds(286, 55, 70, 15);
-	lbcomplemento.setBounds(359, 102, 150, 15);
-	lbcelular.setBounds(456, 55, 70, 15);
-	lbcpf.setBounds(448, 12, 70, 15);
-	lbemail.setBounds(12, 55, 70, 15);
-	lbpesquisa.setBounds(12, 201, 70, 15);
-	lbuf.setBounds(302, 147, 70, 15);
-	lbcep.setBounds(448, 147, 70, 15);
-		
-	//posiçoes dos compos de texto
-	txtcodigo.setBounds(12, 30, 114, 19);
-	txtnome.setBounds(138, 30, 297, 19);
-	txtcpf.setBounds(448, 30, 169, 19);
-	txtemail.setBounds(12, 74, 262, 19);
-	txttelefone.setBounds(285, 74, 158, 19);
-	txtcelular.setBounds(455, 74, 162, 19);
-	txtendereco.setBounds(12, 121, 256, 19);
-	txtnumcasa.setBounds(279, 121, 68, 19);
-	txtcomplemento.setBounds(359, 121, 257, 19);
-	txtcep.setBounds(448, 168, 169, 19);
-	txtpesquisa.setBounds(12, 221, 478, 19);
-		
-	//lagura de cada campo de texto
-	txtcodigo.setColumns(10);
-	txtnome.setColumns(10);
-	txtcpf.setColumns(10);
-	txtemail.setColumns(10);
-	txttelefone.setColumns(10);
-	txtcelular.setColumns(10);
-	txtendereco.setColumns(10);
-	txtnumcasa.setColumns(10);
-	txtcomplemento.setColumns(10);
-	txtcep.setColumns(10);		
-	txtpesquisa.setColumns(10);
-		
-	//posicao dos combobox
-	cbbairro.setBounds(12, 165, 133, 24);
-	cbcidade.setBounds(157, 165, 133, 24);
-	cbuf.setBounds(302, 165, 133, 24);
-		
-	//posicao dos botoes
-	btpesquisa.setBounds(500, 218, 117, 25);
-	btcancelar.setBounds(12, 418, 96, 25);
-	btexcluir.setBounds(120, 418, 95, 25);
-	btalterar.setBounds(227, 418, 95, 25);
-	btnovo.setBounds(334, 418, 95, 25);
-	btsalva.setBounds(525, 418, 95, 25);
-		
-		//add o rotulos na tela
-	c.add(lbcodigo);		
-	c.add(lbnome);
-	c.add(lbendereco);
-	c.add(lbbairro);
-	c.add(lbcidade);
-	c.add(lbuf);
-	c.add(lbcomplemento);		
-	c.add(lbcelular);
-	c.add(lbcpf);
-	c.add(lbnumcasa);
-	c.add(lbcep);
-	c.add(lbtelefone);
-	c.add(lbemail);
-	c.add(lbpesquisa);
-		
-	//add campos de texto na tela
-	c.add(txtcodigo);
-	c.add(txtnome);
-	c.add(txtendereco);
-	c.add(txtcep);
-	c.add(txtnumcasa);
-	c.add(txttelefone);		
-	c.add(txtcelular);
-	c.add(txtcomplemento);
-	c.add(txtcpf);		
-	c.add(txtemail);
-	c.add(txtpesquisa);
-		
-	//add combobox na tela
-	c.add(cbbairro);
-	c.add(cbcidade);		
-	c.add(cbuf);
-						
-	//add botoes na tela
-	c.add(btpesquisa);
-	c.add(btcancelar);
-	c.add(btexcluir);
-	c.add(btalterar);
-	c.add(btnovo);
-	c.add(btsalva);
-        
-        //incia os botoes e campos de texto desabilitado
-        desabilitarBotoes();
-        
-        //ouvites de eventos
-        btnovo.addActionListener(new Bt_novo());
-        btcancelar.addActionListener(new Bt_cancelar());
-        btsalva.addActionListener(new Bt_salva());
-        btalterar.addActionListener(new Bt_editar());
-        btexcluir.addActionListener(new Bt_excluir());
-        
-        table = new JTable();
-	preenchertabela();
-	JScrollPane scrollPane = new JScrollPane(table);
-	scrollPane.setBounds(12, 252, 605, 154);
-	getContentPane().add(scrollPane);
-	
-		
-	}//fim metodo constructor
-	
-    public void desabilitarBotoes(){
+        initComponents();
+        setLocationRelativeTo(null);//tela no centro
+        txtcodigo.setEditable(false);//permanecer desabilitado
+        desabilitarcomponentes();
+        preenchertabela();
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        lbcodigo = new javax.swing.JLabel();
+        txtcodigo = new javax.swing.JTextField();
+        lbnome = new javax.swing.JLabel();
+        txtnome = new javax.swing.JTextField();
+        txtcpf = new javax.swing.JTextField();
+        lbcpf = new javax.swing.JLabel();
+        lbemail = new javax.swing.JLabel();
+        txtemail = new javax.swing.JTextField();
+        txttelefone = new javax.swing.JTextField();
+        txtcelular = new javax.swing.JTextField();
+        lbtelefone = new javax.swing.JLabel();
+        lbcelular = new javax.swing.JLabel();
+        lbendereco = new javax.swing.JLabel();
+        txtendereco = new javax.swing.JTextField();
+        txtnumcasa = new javax.swing.JTextField();
+        txtcomplemento = new javax.swing.JTextField();
+        lbnumcasa = new javax.swing.JLabel();
+        lbcomplemento = new javax.swing.JLabel();
+        lbcidade = new javax.swing.JLabel();
+        cbcidade = new javax.swing.JComboBox<>();
+        lbbairro = new javax.swing.JLabel();
+        cbbairro = new javax.swing.JComboBox<>();
+        lbuf = new javax.swing.JLabel();
+        cbuf = new javax.swing.JComboBox<>();
+        txtcep = new javax.swing.JTextField();
+        lbcep = new javax.swing.JLabel();
+        lbpesquisa = new javax.swing.JLabel();
+        jTextField11 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
+        btCancelar = new javax.swing.JButton();
+        btExcluir = new javax.swing.JButton();
+        btEditar = new javax.swing.JButton();
+        btNovo = new javax.swing.JButton();
+        btSalvar = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        lbcodigo.setText("Código:");
+
+        lbnome.setText("Nome Completo:");
+
+        lbcpf.setText("CPF:");
+
+        lbemail.setText("E-mail:");
+
+        lbtelefone.setText("Telefone:");
+
+        lbcelular.setText("Celular:");
+
+        lbendereco.setText("Endereço:");
+
+        lbnumcasa.setText("Nª:");
+
+        lbcomplemento.setText("Complemento:");
+
+        lbcidade.setText("Cidade:");
+
+        lbbairro.setText("Bairro:");
+
+        lbuf.setText("UF:");
+
+        lbcep.setText("CEP:");
+
+        lbpesquisa.setText("Pesquisa:");
+
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(table);
+
+        btCancelar.setText("Cancelar");
+        btCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCancelarActionPerformed(evt);
+            }
+        });
+
+        btExcluir.setText("Excluir");
+        btExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btExcluirActionPerformed(evt);
+            }
+        });
+
+        btEditar.setText("Editar");
+        btEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btEditarActionPerformed(evt);
+            }
+        });
+
+        btNovo.setText("Novo");
+        btNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNovoActionPerformed(evt);
+            }
+        });
+
+        btSalvar.setText("Salvar");
+        btSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSalvarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtnome, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lbcodigo)
+                                .addGap(93, 93, 93)
+                                .addComponent(lbnome)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lbcpf)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtcpf)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbemail))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txttelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbtelefone))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lbcelular)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtcelular, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtendereco, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbendereco))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtnumcasa, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbnumcasa))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lbcomplemento)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtcomplemento)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbcidade, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbcidade))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbbairro, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbbairro))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbuf)
+                            .addComponent(cbuf, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lbcep)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtcep)))
+                    .addComponent(jTextField11)
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbpesquisa)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btCancelar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btExcluir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btEditar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btNovo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btSalvar)))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbcodigo)
+                    .addComponent(lbnome)
+                    .addComponent(lbcpf))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtnome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtcpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbemail)
+                    .addComponent(lbtelefone)
+                    .addComponent(lbcelular))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txttelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtcelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbendereco)
+                    .addComponent(lbnumcasa)
+                    .addComponent(lbcomplemento))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtendereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtnumcasa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtcomplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbcidade)
+                    .addComponent(lbbairro)
+                    .addComponent(lbuf)
+                    .addComponent(lbcep))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbcidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbbairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbuf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtcep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbpesquisa)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btCancelar)
+                    .addComponent(btExcluir)
+                    .addComponent(btEditar)
+                    .addComponent(btNovo)
+                    .addComponent(btSalvar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
+        desabilitarcomponentes();//desabilita botoes e campos de texto
+        limpartela();//limpa a tela
+    }//GEN-LAST:event_btCancelarActionPerformed
+
+    private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
+        //retorna o indice da linha
+                int linha = table.getSelectedRow();
+                //pergunta
+                String descricao = "Deseja excluir o Cliente:"+table.getValueAt(linha,1)+"?";
+                //obtem o valor verdadeiro ou falso (1,0)
+                int opcao = JOptionPane.showConfirmDialog(null,descricao,"Atenção",JOptionPane.YES_NO_OPTION);
+                    //faz a comparação
+                    if(opcao == JOptionPane.YES_OPTION){
+                        //pega o codigo do cliente
+                        mCadCliente.setCli_id((int) (table.getValueAt(linha, 0)));
+                        //passa para o delete
+                        cCadCliente.delete(mCadCliente);
+                        //assim que o usuario e excluido
+                        //atualiza a tebela
+                        preenchertabela();
+                    }
+                    else{
+                        //senao quiser excluir cliente
+                        //desabilita os camppos
+                       desabilitarcomponentes();
+                    }
+    }//GEN-LAST:event_btExcluirActionPerformed
+
+    private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
+            funcao = "editar";//add a função editar para a variavel
+            habilitacomponentes();//habilita campos e botoes
+            pegadadosdatabela();//e recupera os dados da tabela
+    }//GEN-LAST:event_btEditarActionPerformed
+
+    private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
+        //abilita campos e botoes
+                habilitacomponentes();
+                //limpa a tela
+                limpartela();
+                //add a fução novo
+                funcao = "salvar";
+    }//GEN-LAST:event_btNovoActionPerformed
+
+    private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
+        //para salvar depende da funcao se recebeu salvar ou editar
+            //se funcao receber salvar ao clickar no botao novo ele excuta
+            //o insert
+            if(funcao.equals("salvar")){
+               //insert recebe os dados dos campos de texto
+               //retorna para a insersão ao banco
+               cCadCliente.insert(montarCliente("salvar"));
+               //apos desabilita os campos
+               habilitacomponentes();
+               //limpa a tela
+               limpartela();
+               //atualiza a tabela
+               preenchertabela();
+               
+            }
+            else{//senao for salvar, foi clickado no boatao editar
+               //e o metodo montar tela pega os dados do campo
+               //e retorna para update atualizar as informações do
+               //usuario
+               cCadCliente.update(montarCliente("editar"));
+               //desabilita os campos
+               desabilitarcomponentes();
+               //limpa a tela
+               limpartela();
+               //atualiza a tabela
+               preenchertabela();
+            }
+    }//GEN-LAST:event_btSalvarActionPerformed
+
+    /*================================================OUTROS METODOS========================================*/
+    //metodo para desabilitar componentes
+    public void desabilitarcomponentes(){//inicio
         txtnome.setEditable(false);
         txtcpf.setEditable(false);
         txtemail.setEditable(false);
@@ -251,16 +400,18 @@ public class ViewCadCliente extends JFrame{
         cbcidade.setEnabled(false);
         cbuf.setEnabled(false);
         
-        btcancelar.setEnabled(false);
-        btsalva.setEnabled(false);
+        btCancelar.setEnabled(false);
+        btSalvar.setEnabled(false);
         
-        btnovo.setEnabled(true);
-        btalterar.setEnabled(true);
-        btexcluir.setEnabled(true);
+        btNovo.setEnabled(true);
+        btEditar.setEnabled(true);
+        btExcluir.setEnabled(true);
         
 
-    }
-    public void habilitaBotoes(){
+    }//fim metodo desabilitarcomponentes
+    
+    //metodo habilitar componentes
+    public void habilitacomponentes(){
         
         txtnome.setEditable(true);
         txtcpf.setEditable(true);
@@ -276,15 +427,17 @@ public class ViewCadCliente extends JFrame{
         cbcidade.setEnabled(true);
         cbuf.setEnabled(true);
         
-        btcancelar.setEnabled(true);
-        btsalva.setEnabled(true);
+        btCancelar.setEnabled(true);
+        btSalvar.setEnabled(true);
         
-        btnovo.setEnabled(false);
-        btalterar.setEnabled(false);
-        btexcluir.setEnabled(false);
+        btNovo.setEnabled(false);
+        btEditar.setEnabled(false);
+        btExcluir.setEnabled(false);
         
-    }
-    public void limpartela(){
+    }//fim metodo de habilitar componentes
+    
+    //metodo para limpar campos
+    public void limpartela(){//incio
         txtcodigo.setText("");
         txtnome.setText("");
         txtcpf.setText("");
@@ -295,9 +448,9 @@ public class ViewCadCliente extends JFrame{
         txtnumcasa.setText("");
         txtcomplemento.setText("");
         txtcep.setText("");
-    }
-	
-    //metodo para obter dados do campos de texto
+    }//fim do metodo limpa campos
+    
+        //metodo para obter dados do campos de texto
     //retorna o objeto do modelo cliente
     //o controle recebe o modelo, para cadastrar autlizar ou excluir
     private ModelCadCliente montarCliente(String funcao){
@@ -340,22 +493,22 @@ public class ViewCadCliente extends JFrame{
 		return mCadCliente;
     }//fim metodo para construir tela
     
-    //pegar dados da tabela e retorna para os campos
-    private void pegadados(){
+     //pegar dados da tabela e retorna para os campos
+    private void pegadadosdatabela(){
      int linha = table.getSelectedRow();
      //table retona a index da coluna (linha,coluna)
-     txtcodigo.setText(""+table.getValueAt(linha, 0));
-     txtnome.setText(""+table.getValueAt(linha, 1));
-     txtcpf.setText(""+table.getValueAt(linha, 2));
-     txtemail.setText(""+table.getValueAt(linha, 3));
-     txttelefone.setText(""+table.getValueAt(linha, 4));
-     txtcelular.setText(""+table.getValueAt(linha, 5));
-     txtendereco.setText(""+table.getValueAt(linha, 6));
-     txtnumcasa.setText(""+table.getValueAt(linha, 7));
-     txtcomplemento.setText(""+table.getValueAt(linha, 8));
-     txtcep.setText(""+table.getValueAt(linha, 12));
+        txtcodigo.setText(""+table.getValueAt(linha, 0));
+        txtnome.setText(""+table.getValueAt(linha, 1));
+        txtcpf.setText(""+table.getValueAt(linha, 2));
+        txtemail.setText(""+table.getValueAt(linha, 3));
+        txttelefone.setText(""+table.getValueAt(linha, 4));
+        txtcelular.setText(""+table.getValueAt(linha, 5));
+        txtendereco.setText(""+table.getValueAt(linha, 6));
+        txtnumcasa.setText(""+table.getValueAt(linha, 7));
+        txtcomplemento.setText(""+table.getValueAt(linha, 8));
+        txtcep.setText(""+table.getValueAt(linha, 12));
     }
-	
+    
     //metodo para modelo a tabela do form
     //e preencher o mesmo
     private void preenchertabela(){
@@ -370,15 +523,15 @@ public class ViewCadCliente extends JFrame{
 	ArrayList dados = new ArrayList();
 		
 	//para preencher as linhas da tabela com os dados
-	for (ModelCadCliente model : clientes) {
-            //add cada dado em linhas da table
-            dados.add(new Object[]{model.getCli_id(),model.getCli_nome(),model.getCli_cpf(),
+            for (ModelCadCliente model : clientes) {
+             //add cada dado em linhas da table
+                dados.add(new Object[]{model.getCli_id(),model.getCli_nome(),model.getCli_cpf(),
                 model.getCli_email(),model.getCli_telefone(),model.getCli_celular(),
-		model.getCli_endereco(),model.getCli_numcasa(),model.getCli_complemento()
-		,model.getCli_bairro(), model.getCli_idcidade(), model.getCli_idestado()
-		,model.getCli_cep()
-            });//fim dados.add
-	}//fim for
+		model.getCli_endereco(),model.getCli_numcasa(),model.getCli_complemento(),
+		model.getCli_bairro(), model.getCli_idcidade(), model.getCli_idestado(),
+		model.getCli_cep()
+                });//fim dados.add
+            }//fim for
 		
             //seta um modelo da tabela com os dados em linhae colunas
             table.setModel(new ModeloTabela(dados,new String[] {"Código", "Nome", "CPF", "E-mail", "Telefone", "Celular", "Endereço",
@@ -386,119 +539,91 @@ public class ViewCadCliente extends JFrame{
             table.getTableHeader().setReorderingAllowed(false);
             //para preencher cada campo com lagura de 50 e impedir que
             //seja remensionado false
-            for(int i=0;i<12;i++){
+                for(int i=0;i<12;i++){
 		//table.getColumnModel().getColumn(i).setResizable(false);
                 table.getColumnModel().getColumn(i).setPreferredWidth(100);
-            }
+                 }
 		table.setAutoResizeMode(table.AUTO_RESIZE_OFF);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	}//fim metodo preenchertabela
     
-    //novo titulo dinamico
-    private void titulodajanela(String titulo){
-        new ViewCadCliente().setTitle("Cadastro de Cliente" + titulo);
+    
+    
+    
+    
+    
+    
+    /*============================================================FIM DE OUTROS METODOS==================================*/
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Metal".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(ViewCadCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(ViewCadCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(ViewCadCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(ViewCadCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new ViewCadCliente().setVisible(true);
+            }
+        });
     }
-    
-    
-    
-    //##============================================================EVENTOS===============================================================
-        
-        //class para add novo cliente
-        private class Bt_novo implements ActionListener{
-            public void actionPerformed(ActionEvent ae) {
-                //abilita campos e botoes
-                habilitaBotoes();
-                //limpa a tela
-                limpartela();
-                //add a fução novo
-                funcao = "salvar";
-                titulodajanela("[Novo Cadastro]");
-            }
-        }
-        //class para inserir as informações no banco de dados
-        private class Bt_salva implements ActionListener{
-            public void actionPerformed(ActionEvent ae) {     
-            //para salvar depende da funcao se recebeu salvar ou editar
-            //se funcao receber salvar ao clickar no botao novo ele excuta
-            //o insert
-            if(funcao.equals("salvar")){
-               //insert recebe os dados dos campos de texto
-               //retorna para a insersão ao banco
-               cCadCliente.insert(montarCliente("salvar"));
-               //apos desabilita os campos
-               desabilitarBotoes();
-               //limpa a tela
-               limpartela();
-               //atualiza a tabela
-               preenchertabela();
-               
-            }
-            else{//senao for salvar, foi clickado no boatao editar
-               //e o metodo montar tela pega os dados do campo
-               //e retorna para update atualizar as informações do
-               //usuario
-               cCadCliente.update(montarCliente("editar"));
-               //desabilita os campos
-               desabilitarBotoes();
-               //limpa a tela
-               limpartela();
-               //atualiza a tabela
-               preenchertabela();
-            }
-          }
-        }
-        //class pra atualiza dados do cliente
-        private class Bt_editar implements ActionListener{
-            public void actionPerformed(ActionEvent ae) {
-             funcao = "editar";//add a função editar para a variavel
-             titulodajanela("[Atualizar Cadastro]");
-             habilitaBotoes();//habilita campos e botoes
-             pegadados();//e recupera os dados da tabela
-            }
-        }
-        //class para excluir cliente
-        private class Bt_excluir implements ActionListener{
-            public void actionPerformed(ActionEvent ae) {
-                //retorna o indice da linha
-                int linha = table.getSelectedRow();
-                //pergunta
-                String descricao = "Deseja excluir o Cliente:"+table.getValueAt(linha,1)+"?";
-                //obtem o valor verdadeiro ou falso (1,0)
-                int opcao = JOptionPane.showConfirmDialog(null,descricao,"Atenção",JOptionPane.YES_NO_OPTION);
-                    //faz a comparação
-                    if(opcao == JOptionPane.YES_OPTION){
-                        //pega o codigo do cliente
-                        mCadCliente.setCli_id((int) (table.getValueAt(linha, 0)));
-                        //passa para o delete
-                        cCadCliente.delete(mCadCliente);
-                        //assim que o usuario e excluido
-                        //atualiza a tebela
-                        preenchertabela();
-                    }
-                    else{
-                        //senao quiser excluir cliente
-                        //desabilita os camppos
-                       desabilitarBotoes();
-                    }
-             }
-        }
-        //class para cancelar a acao de outros botoes
-        private class Bt_cancelar implements ActionListener{
-            public void actionPerformed(ActionEvent ae) {
-                desabilitarBotoes();//desabilita botoes e campos de texto
-                limpartela();//limpa a tela
-            }
-        }
-        //class de filtro de tabela
-        private class Bt_pesquisa implements ActionListener{
-            public void actionPerformed(ActionEvent ae) {
-            
-            }
-        }
-    //##=======================================================================FIM DE EVENTOS ==========================================
-	//metodo principal
-	public static void main(String[] args) {
-	 //chama a janela tornado à visivel
-	 new ViewCadCliente().setVisible(true);
-	}//fim metodo principal
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btCancelar;
+    private javax.swing.JButton btEditar;
+    private javax.swing.JButton btExcluir;
+    private javax.swing.JButton btNovo;
+    private javax.swing.JButton btSalvar;
+    private javax.swing.JComboBox<String> cbbairro;
+    private javax.swing.JComboBox<String> cbcidade;
+    private javax.swing.JComboBox<String> cbuf;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField11;
+    private javax.swing.JLabel lbbairro;
+    private javax.swing.JLabel lbcelular;
+    private javax.swing.JLabel lbcep;
+    private javax.swing.JLabel lbcidade;
+    private javax.swing.JLabel lbcodigo;
+    private javax.swing.JLabel lbcomplemento;
+    private javax.swing.JLabel lbcpf;
+    private javax.swing.JLabel lbemail;
+    private javax.swing.JLabel lbendereco;
+    private javax.swing.JLabel lbnome;
+    private javax.swing.JLabel lbnumcasa;
+    private javax.swing.JLabel lbpesquisa;
+    private javax.swing.JLabel lbtelefone;
+    private javax.swing.JLabel lbuf;
+    private javax.swing.JTable table;
+    private javax.swing.JTextField txtcelular;
+    private javax.swing.JTextField txtcep;
+    private javax.swing.JTextField txtcodigo;
+    private javax.swing.JTextField txtcomplemento;
+    private javax.swing.JTextField txtcpf;
+    private javax.swing.JTextField txtemail;
+    private javax.swing.JTextField txtendereco;
+    private javax.swing.JTextField txtnome;
+    private javax.swing.JTextField txtnumcasa;
+    private javax.swing.JTextField txttelefone;
+    // End of variables declaration//GEN-END:variables
 }
