@@ -34,6 +34,9 @@ public class ViewCadCliente extends javax.swing.JFrame {
         txtcodigo.setEditable(false);//permanecer desabilitado
         desabilitarcomponentes();
         preenchertabela();
+        
+        mCadCliente = new ModelCadCliente();
+        cCadCliente = new ControllerCadCliente();
     }
 
     /**
@@ -316,7 +319,8 @@ public class ViewCadCliente extends javax.swing.JFrame {
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
         //retorna o indice da linha
-                int linha = table.getSelectedRow();
+        int linha = table.getSelectedRow();
+            if(linha >= 0){
                 //pergunta
                 String descricao = "Deseja excluir o Cliente:"+table.getValueAt(linha,1)+"?";
                 //obtem o valor verdadeiro ou falso (1,0)
@@ -336,6 +340,10 @@ public class ViewCadCliente extends javax.swing.JFrame {
                         //desabilita os camppos
                        desabilitarcomponentes();
                     }
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Selecione um campo no banco de dados!");
+            }
     }//GEN-LAST:event_btExcluirActionPerformed
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
@@ -385,7 +393,7 @@ public class ViewCadCliente extends javax.swing.JFrame {
 
     /*================================================OUTROS METODOS========================================*/
     //metodo para desabilitar componentes
-    public void desabilitarcomponentes(){//inicio
+    private void desabilitarcomponentes(){//inicio
         txtnome.setEditable(false);
         txtcpf.setEditable(false);
         txtemail.setEditable(false);
@@ -411,7 +419,7 @@ public class ViewCadCliente extends javax.swing.JFrame {
     }//fim metodo desabilitarcomponentes
     
     //metodo habilitar componentes
-    public void habilitacomponentes(){
+    private void habilitacomponentes(){
         
         txtnome.setEditable(true);
         txtcpf.setEditable(true);
@@ -437,7 +445,7 @@ public class ViewCadCliente extends javax.swing.JFrame {
     }//fim metodo de habilitar componentes
     
     //metodo para limpar campos
-    public void limpartela(){//incio
+    private void limpartela(){//incio
         txtcodigo.setText("");
         txtnome.setText("");
         txtcpf.setText("");
@@ -496,6 +504,7 @@ public class ViewCadCliente extends javax.swing.JFrame {
      //pegar dados da tabela e retorna para os campos
     private void pegadadosdatabela(){
      int linha = table.getSelectedRow();
+     if(linha >= 0){
      //table retona a index da coluna (linha,coluna)
         txtcodigo.setText(""+table.getValueAt(linha, 0));
         txtnome.setText(""+table.getValueAt(linha, 1));
@@ -507,6 +516,10 @@ public class ViewCadCliente extends javax.swing.JFrame {
         txtnumcasa.setText(""+table.getValueAt(linha, 7));
         txtcomplemento.setText(""+table.getValueAt(linha, 8));
         txtcep.setText(""+table.getValueAt(linha, 12));
+     }
+     else{
+         JOptionPane.showMessageDialog(null, "Selecione um campo na tabela!");
+     }
     }
     
     //metodo para modelo a tabela do form
