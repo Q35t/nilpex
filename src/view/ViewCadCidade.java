@@ -69,6 +69,7 @@ public class ViewCadCidade extends javax.swing.JFrame {
         btSalvar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Cadastro de Cidade");
 
         lbcodigo.setText("Código:");
 
