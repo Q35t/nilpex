@@ -39,6 +39,7 @@ public class ViewCadProduto extends javax.swing.JFrame {
         lbfornecedor = new javax.swing.JLabel();
         cbfornecedor = new javax.swing.JComboBox<>();
         plfoto = new javax.swing.JPanel();
+        lbfoto = new javax.swing.JLabel();
         lbaddfoto = new javax.swing.JLabel();
         txtaddfoto = new javax.swing.JTextField();
         btaddfoto = new javax.swing.JButton();
@@ -66,17 +67,11 @@ public class ViewCadProduto extends javax.swing.JFrame {
         lbfornecedor.setText("Fornecedor:");
 
         plfoto.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        plfoto.setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout plfotoLayout = new javax.swing.GroupLayout(plfoto);
-        plfoto.setLayout(plfotoLayout);
-        plfotoLayout.setHorizontalGroup(
-            plfotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 175, Short.MAX_VALUE)
-        );
-        plfotoLayout.setVerticalGroup(
-            plfotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 139, Short.MAX_VALUE)
-        );
+        lbfoto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbfoto.setText("FOTO");
+        plfoto.add(lbfoto, java.awt.BorderLayout.CENTER);
 
         lbaddfoto.setText("Adiciona foto:");
 
@@ -147,7 +142,7 @@ public class ViewCadProduto extends javax.swing.JFrame {
                                     .addGap(15, 15, 15)
                                     .addComponent(btaddfoto))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(plfoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(plfoto, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(25, 25, 25))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btCancelar)
@@ -177,7 +172,7 @@ public class ViewCadProduto extends javax.swing.JFrame {
                     .addComponent(txtvalor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtquantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbfornecedor)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -192,8 +187,8 @@ public class ViewCadProduto extends javax.swing.JFrame {
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtpesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(plfoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(plfoto, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -257,6 +252,7 @@ public class ViewCadProduto extends javax.swing.JFrame {
     private javax.swing.JLabel lbaddfoto;
     private javax.swing.JLabel lbcodigo;
     private javax.swing.JLabel lbfornecedor;
+    private javax.swing.JLabel lbfoto;
     private javax.swing.JLabel lbquantestoque;
     private javax.swing.JLabel lbvalor;
     private javax.swing.JPanel plfoto;
