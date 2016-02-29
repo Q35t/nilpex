@@ -85,6 +85,7 @@ public class ViewCadCliente extends javax.swing.JFrame {
         btSalvar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Cadastro de Cliente");
 
         lbcodigo.setText("Código:");
 
