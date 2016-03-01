@@ -125,7 +125,7 @@ public class ControllerCadCliente implements InterfaceCrud {
         //estacia do modelo de cadastro de cliente
         ModelCadCliente mCadCliente = new ModelCadCliente();
         //scrip sql
-        String sql = "select * from tbl_cadCli where = ? ";
+        String sql = "select * from tab_cadCli where = ? ";
         PreparedStatement ps;
 
         try {
