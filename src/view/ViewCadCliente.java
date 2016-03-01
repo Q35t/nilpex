@@ -520,6 +520,7 @@ public class ViewCadCliente extends javax.swing.JFrame {
      }
      else{
          JOptionPane.showMessageDialog(null, "Selecione um campo na tabela!");
+         desabilitarcomponentes();
      }
     }
     
