@@ -5,9 +5,16 @@
  */
 package view;
 
+import controller.ControllerBairro;
+import controller.ControllerCidade;
+import controller.ControllerEstado;
 import controller.ControllerFornecedor;
 import controller.ControllerFornecedorCidadeBairroUf;
+import java.util.List;
 import javax.swing.JOptionPane;
+import model.ModelBairro;
+import model.ModelCidade;
+import model.ModelEstado;
 import model.ModelFornecedor;
 import model.ModelFornecedorCidadeBairroUf;
 
@@ -23,6 +30,10 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
     private ModelFornecedorCidadeBairroUf mForCidBaiUf;
     private ControllerFornecedorCidadeBairroUf cForCidBaiUf;
     
+    private ControllerEstado cEstado;
+    private ControllerCidade cCidade;
+    private ControllerBairro cBairro;
+    
     /**
      * Creates new form ViewCadFornecedor
      */
@@ -32,6 +43,14 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
         
         this.mCadFornecedor = new ModelFornecedor();
         this.cCadFornecedor = new ControllerFornecedor();
+        
+        cCidade = new ControllerCidade();
+        cBairro = new ControllerBairro();
+        cEstado = new ControllerEstado();
+        
+        listarBairro();
+        listarCidades();
+        listarEstados();
     }
 
     /**
@@ -459,6 +478,31 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
          desabilitarcomponentes();
      }
     }
+    
+    private void listarEstados(){
+        this.cEstado = new ControllerEstado();
+        List<ModelEstado> listEstado  = cEstado.select();
+        cbuf.removeAllItems();
+        for(ModelEstado mEstado : listEstado){
+            cbuf.addItem(mEstado.getEstado_uf());
+        }
+    }
+    private void listarCidades(){
+        this.cCidade = new ControllerCidade();
+        List<ModelCidade> listCidade = this.cCidade.select();
+        cbcidade.removeAllItems();
+        for(ModelCidade m : listCidade){
+            cbcidade.addItem(m.getCid_nome());
+        }
+    }
+     private void listarBairro(){
+        this.cBairro = new ControllerBairro();
+        List<ModelBairro> listBairro = this.cBairro.select();
+        cbbairro.removeAllItems();
+        for(ModelBairro m : listBairro){
+            cbbairro.addItem(m.getBairro_nome());
+        }
+     }
     
     /**
      * @param args the command line arguments

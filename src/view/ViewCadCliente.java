@@ -61,6 +61,7 @@ public class ViewCadCliente extends javax.swing.JFrame {
         
         cCidade = new ControllerCidade();
         cBairro = new ControllerBairro();
+        cEstado = new ControllerEstado();
         
         preenchertabela();
         listarEstados();

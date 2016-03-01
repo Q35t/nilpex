@@ -11,6 +11,7 @@ import controller.ControllerCidade;
 import controller.ControllerEstado;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import model.ModelBairro;
 import model.ModelBairroCidadeEstado;
@@ -35,6 +36,7 @@ public class ViewCadBairro extends javax.swing.JFrame {
     private ControllerEstado cEstado;
     
     private ModelBairro mBairro;
+    private ControllerBairro cBairro;
     
     /**
      * Creates new form ViewCadBairro
@@ -43,6 +45,7 @@ public class ViewCadBairro extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         txtcodigo.setEditable(false);
+        desabilitarcomponentes();
         preenchertabela();
         listarCidades();
         listarEstados();
@@ -51,7 +54,7 @@ public class ViewCadBairro extends javax.swing.JFrame {
         this.cEstado = new ControllerEstado();
         
         this.mBairro = new ModelBairro();
-        
+        this.cBairro = new ControllerBairro();
     }
 
     /**
@@ -212,23 +215,82 @@ public class ViewCadBairro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
-        
+        desabilitarcomponentes();//desabilita botoes e campos de texto
+        limpartela();//limpa a tela
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
-       
+       int linha = table.getSelectedRow();
+                //pergunta
+            if(linha >= 0){
+                String descricao = "Deseja excluir a Cidade:"+table.getValueAt(linha,1)+"?";
+                //obtem o valor verdadeiro ou falso (1,0)
+                int opcao = JOptionPane.showConfirmDialog(null,descricao,"Atenção",JOptionPane.YES_NO_OPTION);
+                    //faz a comparação
+                    if(opcao == JOptionPane.YES_OPTION){
+                        //pega o codigo do da cidade
+                        
+                        this.mBairro.setBairro_id((int) (table.getValueAt(linha, 0)));
+                        //passa para o delete
+                        this.cBairro.delete(this.mBairro);
+                        //assim que o a cidade e excluido
+                        //atualiza a tebela
+                        preenchertabela();
+                    }
+                    else{
+                        //senao quiser excluir a cidade
+                        //desabilita os camppos
+                       desabilitarcomponentes();
+                    }
+            }
+            else{
+               JOptionPane.showMessageDialog(null, "Selecione algum campo na tabela!");
+               desabilitarcomponentes();
+            }
     }//GEN-LAST:event_btExcluirActionPerformed
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
-       
+        funcao = "editar";//add a função editar para a variavel
+        habilitacomponentes();//habilita campos e botoes
+        pegadadosdatabela();//e recupera os dados da tabela
     }//GEN-LAST:event_btEditarActionPerformed
 
     private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
-       
+       habilitacomponentes();
+        //limpa a tela
+        limpartela();
+        //add a fução novo
+        funcao = "salvar";
     }//GEN-LAST:event_btNovoActionPerformed
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        
+           //para salvar depende da funcao se recebeu salvar ou editar
+            //se funcao receber salvar ao clickar no botao novo ele excuta
+            //o insert
+            if(funcao.equals("salvar")){
+               //insert recebe os dados dos campos de texto
+               //retorna para a insersão ao banco
+               this.cCidade.insert(montarBairro("salvar"));
+               //apos desabilita os campos
+               habilitacomponentes();
+               //limpa a tela
+               limpartela();
+               //atualiza a tabela
+               preenchertabela();
+               
+            }
+            else{//senao for salvar, foi clickado no boatao editar
+               //e o metodo montar tela pega os dados do campo
+               //e retorna para update atualizar as informações do
+               //usuario
+               this.cBairro.update(montarBairro("editar"));
+               //desabilita os campos
+               desabilitarcomponentes();
+               //limpa a tela
+               limpartela();
+               //atualiza a tabela
+               preenchertabela();
+            }
     }//GEN-LAST:event_btSalvarActionPerformed
     
     /*================================================OUTROS METODOS========================================*/
@@ -250,8 +312,7 @@ public class ViewCadBairro extends javax.swing.JFrame {
     
     //metodo habilitar componentes
     private void habilitacomponentes(){
-        
-        txtcodigo.setEditable(true);
+        txtbairro.setEditable(true);
         cbcidade.setEnabled(true);
         cbuf.setEnabled(true);
         
@@ -323,6 +384,22 @@ public class ViewCadBairro extends javax.swing.JFrame {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }//fim metodo preenchertabela
      
+     private void pegadadosdatabela(){
+     int linha = table.getSelectedRow();
+     
+     if(linha >= 0 ){
+        //table retona a index da coluna (linha,coluna)
+        txtcodigo.setText(""+table.getValueAt(linha, 0));
+        txtbairro.setText(""+table.getValueAt(linha, 1));
+        cbcidade.setSelectedItem(""+table.getValueAt(linha, 2));
+        cbuf.setSelectedItem(""+table.getValueAt(linha, 3));
+     }
+     else{
+         JOptionPane.showMessageDialog(null, "Selecione algum campo na tabela!");
+         desabilitarcomponentes();
+     }
+     
+    }
      
     private void listarEstados(){
         this.cEstado = new ControllerEstado();
