@@ -50,8 +50,8 @@ public class ViewCadCliente extends JFrame{
     private String funcao2;
     
 	
-    private ModelCadCliente mCadCliente;//Declarando o modelo do banco cliente
-    private ControllerCadCliente cCadCliente;//Declanrando o controle do banco
+    private ModelCliente mCadCliente;//Declarando o modelo do banco cliente
+    private ControllerCliente cCadCliente;//Declanrando o controle do banco
 	
     //metodo construtor
     public ViewCadCliente() {
@@ -300,9 +300,9 @@ public class ViewCadCliente extends JFrame{
     //metodo para obter dados do campos de texto
     //retorna o objeto do modelo cliente
     //o controle recebe o modelo, para cadastrar autlizar ou excluir
-    private ModelCadCliente montarCliente(String funcao){
+    private ModelCliente montarCliente(String funcao){
 	//modelo
-	mCadCliente = new ModelCadCliente();
+	mCadCliente = new ModelCliente();
 	//codicao
             if(funcao.equals("salvar")){
 		mCadCliente.setCli_nome(txtnome.getText());
@@ -361,16 +361,16 @@ public class ViewCadCliente extends JFrame{
     private void preenchertabela(){
 		
 	//ConexaoJdbc.executarSQL("Select * from cad_categoria");
-	mCadCliente = new ModelCadCliente();
-	cCadCliente = new ControllerCadCliente();
+	mCadCliente = new ModelCliente();
+	cCadCliente = new ControllerCliente();
 		
 	//Lista de clientes recebe do controle o retorno de uma consulta no banco
-	List<ModelCadCliente> clientes = cCadCliente.select();
+	List<ModelCliente> clientes = cCadCliente.select();
 	//criar o vetor dados para preencher a tabela
 	ArrayList dados = new ArrayList();
 		
 	//para preencher as linhas da tabela com os dados
-	for (ModelCadCliente model : clientes) {
+	for (ModelCliente model : clientes) {
             //add cada dado em linhas da table
             dados.add(new Object[]{model.getCli_id(),model.getCli_nome(),model.getCli_cpf(),
                 model.getCli_email(),model.getCli_telefone(),model.getCli_celular(),

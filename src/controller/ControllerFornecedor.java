@@ -13,27 +13,27 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import model.ModelCadFornecedor;
+import model.ModelFornecedor;
 import util.InterfaceCrud;
 
 /**
  *
  * @author wellington
  */
-public class ControllerCadFornecedor implements InterfaceCrud {
+public class ControllerFornecedor implements InterfaceCrud {
     
     private Connection con;
-    private ModelCadFornecedor mCadFornecedor;
+    private ModelFornecedor mCadFornecedor;
     
-    public ControllerCadFornecedor(){
+    public ControllerFornecedor(){
         
         this.con = ConexaoJdbc.getConexao();
-        this.mCadFornecedor = new ModelCadFornecedor();
+        this.mCadFornecedor = new ModelFornecedor();
     }
     
     @Override
     public void insert(Object o) {
-       this.mCadFornecedor = (ModelCadFornecedor) o;
+       this.mCadFornecedor = (ModelFornecedor) o;
        String sql = "insert into tab_cadfornecedor (for_nome,for_cnpj_cpf,for_email,for_endereco,for_num,for_complemento,for_idbairro,for_idcidade,for_idestado,for_cep,for_telefone,for_telcomercial) values"
                + "(?,?,?,?,?,?,?,?,?,?,?,?)";
        
@@ -62,7 +62,7 @@ public class ControllerCadFornecedor implements InterfaceCrud {
 
     @Override
     public void update(Object o) {
-       this.mCadFornecedor = (ModelCadFornecedor) o;
+       this.mCadFornecedor = (ModelFornecedor) o;
        String sql = "update tab_cadfornecedor set for_nome = ?,for_cnpj_cpf = ? ,for_email = ?,for_endereco = ?,for_num = ?,for_complemento = ?, for_idbairro = ?,for_idcidade = ?,for_idestado = ?,for_cep = ?,for_telefone = ?,for_telcomercial = ? where for_id=?";
        
        try{
@@ -91,7 +91,7 @@ public class ControllerCadFornecedor implements InterfaceCrud {
 
     @Override
     public void delete(Object o) {
-      this.mCadFornecedor = (ModelCadFornecedor) o;
+      this.mCadFornecedor = (ModelFornecedor) o;
        String sql = "delete from tab_cadfornecedor where for_id = ?";
        
        try{
@@ -147,7 +147,7 @@ public class ControllerCadFornecedor implements InterfaceCrud {
 
     @Override
     public List select() {
-         List<ModelCadFornecedor> ListCadFornecedor = new ArrayList<ModelCadFornecedor>();
+         List<ModelFornecedor> ListCadFornecedor = new ArrayList<ModelFornecedor>();
         String sql = "select * from tab_cadfornecedor";
         PreparedStatement ps;
 

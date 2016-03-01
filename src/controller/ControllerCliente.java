@@ -17,17 +17,17 @@ import javax.swing.JOptionPane;
  *
  * @author wellington
  */
-import model.ModelCadCliente;
+import model.ModelCliente;
 import conexao.ConexaoJdbc;
 import util.InterfaceCrud;
 
-public class ControllerCadCliente implements InterfaceCrud {
+public class ControllerCliente implements InterfaceCrud {
 
     private Connection con;
 
     //construto iciando atributo con com
     //a comunicação com o banco
-    public ControllerCadCliente() {
+    public ControllerCliente() {
         this.con = ConexaoJdbc.getConexao();
     }
 
@@ -36,7 +36,7 @@ public class ControllerCadCliente implements InterfaceCrud {
     public void insert(Object o) {
         //parametro 'o' repasando dados para mcadcliente em forma de cast
         //forçando sua conversao
-        ModelCadCliente mCadCliente = (ModelCadCliente) o;
+        ModelCliente mCadCliente = (ModelCliente) o;
         //variavel sql recebe script de insercao de dados sql
         String sql = "INSERT INTO  tab_cadcliente (cli_nome,cli_cpf,cli_email,cli_endereco,cli_numcasa,cli_complemento,cli_idbairro,cli_idcidade,cli_idestado,cli_cep,cli_telefone,cli_celular)"
                 + " values(?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -70,7 +70,7 @@ public class ControllerCadCliente implements InterfaceCrud {
 
         //parametro 'o' repasando dados para mcadcliente em forma de cast
         //forçando sua conversao
-        ModelCadCliente mCadCliente = (ModelCadCliente) o;
+        ModelCliente mCadCliente = (ModelCliente) o;
         //variavel sql recebe script de insercao de dados sql
         String sql = "UPDATE tab_cadcliente set cli_nome = ?, cli_cpf = ?, cli_email = ?,cli_endereco = ?,cli_numcasa = ?, cli_complemento = ?,cli_idbairro = ?,cli_idcidade = ?,cli_idestado = ?,cli_cep = ?,cli_telefone = ?,cli_celular = ?"
                 + " where cli_id = ? ";
@@ -102,7 +102,7 @@ public class ControllerCadCliente implements InterfaceCrud {
     public void delete(Object o) {
         //parametro 'o' repasando dados para mcadcliente em forma de cast
         //forçando sua conversao
-        ModelCadCliente mCadCliente = (ModelCadCliente) o;
+        ModelCliente mCadCliente = (ModelCliente) o;
         //variavel sql recebe script de insercao de dados sql
         String sql = "delete from tab_cadcliente where cli_id = ?";
 
@@ -123,7 +123,7 @@ public class ControllerCadCliente implements InterfaceCrud {
     @Override
     public Object select(int i) {
         //estacia do modelo de cadastro de cliente
-        ModelCadCliente mCadCliente = new ModelCadCliente();
+        ModelCliente mCadCliente = new ModelCliente();
         //scrip sql
         String sql = "select * from tab_cadCli where = ? ";
         PreparedStatement ps;
@@ -162,7 +162,7 @@ public class ControllerCadCliente implements InterfaceCrud {
 
     @Override
     public List select() {
-        List<ModelCadCliente> ListCadCliente = new ArrayList<ModelCadCliente>();
+        List<ModelCliente> ListCadCliente = new ArrayList<ModelCliente>();
         String sql = "select * from tab_cadcliente";
         PreparedStatement ps;
 
@@ -174,7 +174,7 @@ public class ControllerCadCliente implements InterfaceCrud {
             // e equanto houver cadastro vai para o próximo
             //preenchendo a table do ViewCadCliente
             while (rs.next()) {
-                ModelCadCliente mCadCliente = new ModelCadCliente();
+                ModelCliente mCadCliente = new ModelCliente();
                 //rs retorna todos os dados do banco de cada campo
                 //para mcc que mostra na tabela ViewCadCliente 
                 mCadCliente.setCli_id(rs.getInt("cli_id"));

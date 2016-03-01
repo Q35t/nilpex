@@ -5,12 +5,22 @@
  */
 package view;
 
-import controller.ControllerCadCliente;//controle de cadastro de cliente
+import controller.ControllerBairro;
+import controller.ControllerCidade;
+import controller.ControllerCliente;//controle de cadastro de cliente
+import controller.ControllerCidadeEstado;
+import controller.ControllerClienteCidadeBairroUf;
+import controller.ControllerEstado;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
-import model.ModelCadCliente;//Modelo de cliente dabase de dados
+import model.ModelBairro;
+import model.ModelCidade;
+import model.ModelCliente;//Modelo de cliente dabase de dados
+import model.ModelCidadeEstado;
+import model.ModelClienteCidadeBairroUf;
+import model.ModelEstado;
 import util.ModeloTabela;
 
 /**
@@ -22,8 +32,15 @@ public class ViewCadCliente extends javax.swing.JFrame {
     private String funcao = "salvar";
     private String funcao2;
     
-    private ModelCadCliente mCadCliente;//Declarando o modelo do banco cliente
-    private ControllerCadCliente cCadCliente;
+    private ModelCliente mCadCliente;//Declarando o modelo do banco cliente
+    private ControllerCliente cCadCliente;
+    
+    private ModelClienteCidadeBairroUf mCliCiBaUf;
+    private ControllerClienteCidadeBairroUf cCliCiBaUf;
+    
+    private ControllerEstado cEstado;
+    private ControllerCidade cCidade;
+    private ControllerBairro cBairro;
     
     /**
      * Creates new form ViewCadCliente
@@ -33,10 +50,23 @@ public class ViewCadCliente extends javax.swing.JFrame {
         setLocationRelativeTo(null);//tela no centro
         txtcodigo.setEditable(false);//permanecer desabilitado
         desabilitarcomponentes();
-        preenchertabela();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+       
         
-        mCadCliente = new ModelCadCliente();
-        cCadCliente = new ControllerCadCliente();
+        mCadCliente = new ModelCliente();
+        cCadCliente = new ControllerCliente();
+        
+        mCliCiBaUf = new ModelClienteCidadeBairroUf();
+        cCliCiBaUf = new ControllerClienteCidadeBairroUf();
+        
+        cCidade = new ControllerCidade();
+        cBairro = new ControllerBairro();
+        
+        preenchertabela();
+        listarEstados();
+        listarCidades();
+        listarBairro();
+        
     }
 
     /**
@@ -351,6 +381,7 @@ public class ViewCadCliente extends javax.swing.JFrame {
             funcao = "editar";//add a função editar para a variavel
             habilitacomponentes();//habilita campos e botoes
             pegadadosdatabela();//e recupera os dados da tabela
+            
     }//GEN-LAST:event_btEditarActionPerformed
 
     private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
@@ -462,9 +493,9 @@ public class ViewCadCliente extends javax.swing.JFrame {
         //metodo para obter dados do campos de texto
     //retorna o objeto do modelo cliente
     //o controle recebe o modelo, para cadastrar autlizar ou excluir
-    private ModelCadCliente montarCliente(String funcao){
+    private ModelCliente montarCliente(String funcao){
 	//modelo
-	mCadCliente = new ModelCadCliente();
+	mCadCliente = new ModelCliente();
 	//codicao
             if(funcao.equals("salvar")){
 		mCadCliente.setCli_nome(txtnome.getText());
@@ -475,9 +506,9 @@ public class ViewCadCliente extends javax.swing.JFrame {
 		mCadCliente.setCli_endereco(txtendereco.getText());
 		mCadCliente.setCli_numcasa(txtnumcasa.getText());
 		mCadCliente.setCli_complemento(txtcomplemento.getText());
-		mCadCliente.setCli_bairro(cbbairro.getSelectedIndex());
-		mCadCliente.setCli_idcidade(cbcidade.getSelectedIndex());
-		mCadCliente.setCli_idestado(cbuf.getSelectedIndex());
+		mCadCliente.setCli_bairro(cbbairro.getSelectedIndex()+1);
+		mCadCliente.setCli_idcidade(cbcidade.getSelectedIndex()+1);
+		mCadCliente.setCli_idestado(cbuf.getSelectedIndex()+1);
 		mCadCliente.setCli_cep(txtcep.getText());
 		}
             else{	
@@ -489,9 +520,9 @@ public class ViewCadCliente extends javax.swing.JFrame {
 		mCadCliente.setCli_endereco(txtendereco.getText());
 		mCadCliente.setCli_numcasa(txtnumcasa.getText());
 		mCadCliente.setCli_complemento(txtcomplemento.getText());
-		mCadCliente.setCli_bairro(cbbairro.getSelectedIndex());
-		mCadCliente.setCli_idcidade(cbcidade.getSelectedIndex());
-		mCadCliente.setCli_idestado(cbuf.getSelectedIndex());
+		mCadCliente.setCli_bairro(cbbairro.getSelectedIndex()+1);
+		mCadCliente.setCli_idcidade(cbcidade.getSelectedIndex()+1);
+		mCadCliente.setCli_idestado(cbuf.getSelectedIndex()+1);
 		mCadCliente.setCli_cep(txtcep.getText());
                     if (this.txtcodigo.getText() != null && !this.txtcodigo.getText().equals("")) {
 			mCadCliente.setCli_id(Integer.parseInt(this.txtcodigo.getText()));
@@ -506,7 +537,7 @@ public class ViewCadCliente extends javax.swing.JFrame {
     private void pegadadosdatabela(){
      int linha = table.getSelectedRow();
      if(linha >= 0){
-     //table retona a index da coluna (linha,coluna)
+         //table retona a index da coluna (linha,coluna)
         txtcodigo.setText(""+table.getValueAt(linha, 0));
         txtnome.setText(""+table.getValueAt(linha, 1));
         txtcpf.setText(""+table.getValueAt(linha, 2));
@@ -516,10 +547,11 @@ public class ViewCadCliente extends javax.swing.JFrame {
         txtendereco.setText(""+table.getValueAt(linha, 6));
         txtnumcasa.setText(""+table.getValueAt(linha, 7));
         txtcomplemento.setText(""+table.getValueAt(linha, 8));
-        txtcep.setText(""+table.getValueAt(linha, 12));
+        txtcep.setText(""+table.getValueAt(linha, 12)); 
+         
      }
      else{
-         JOptionPane.showMessageDialog(null, "Selecione um campo na tabela!");
+        JOptionPane.showMessageDialog(null, "Selecione um campo na tabela!");
          desabilitarcomponentes();
      }
     }
@@ -529,16 +561,16 @@ public class ViewCadCliente extends javax.swing.JFrame {
     private void preenchertabela(){
 		
 	//ConexaoJdbc.executarSQL("Select * from cad_categoria");
-	mCadCliente = new ModelCadCliente();
-	cCadCliente = new ControllerCadCliente();
+	mCadCliente = new ModelCliente();
+	cCadCliente = new ControllerCliente();
 		
 	//Lista de clientes recebe do controle o retorno de uma consulta no banco
-	List<ModelCadCliente> clientes = cCadCliente.select();
+	List<ModelCliente> clientes = cCadCliente.select();
 	//criar o vetor dados para preencher a tabela
 	ArrayList dados = new ArrayList();
 		
 	//para preencher as linhas da tabela com os dados
-            for (ModelCadCliente model : clientes) {
+            for (ModelCliente model : clientes) {
              //add cada dado em linhas da table
                 dados.add(new Object[]{model.getCli_id(),model.getCli_nome(),model.getCli_cpf(),
                 model.getCli_email(),model.getCli_telefone(),model.getCli_celular(),
@@ -562,11 +594,31 @@ public class ViewCadCliente extends javax.swing.JFrame {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	}//fim metodo preenchertabela
     
-    
-    
-    
-    
-    
+     //preencher combobox estado
+    private void listarEstados(){
+        this.cEstado = new ControllerEstado();
+        List<ModelEstado> listEstado  = cEstado.select();
+        cbuf.removeAllItems();
+        for(ModelEstado mEstado : listEstado){
+            cbuf.addItem(mEstado.getEstado_uf());
+        }
+    }
+    private void listarCidades(){
+        this.cCidade = new ControllerCidade();
+        List<ModelCidade> listCidade = this.cCidade.select();
+        cbcidade.removeAllItems();
+        for(ModelCidade m : listCidade){
+            cbcidade.addItem(m.getCid_nome());
+        }
+    }
+     private void listarBairro(){
+        this.cBairro = new ControllerBairro();
+        List<ModelBairro> listBairro = this.cBairro.select();
+        cbbairro.removeAllItems();
+        for(ModelBairro m : listBairro){
+            cbbairro.addItem(m.getBairro_nome());
+        }
+     }
     
     /*============================================================FIM DE OUTROS METODOS==================================*/
     /**

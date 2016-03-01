@@ -9,7 +9,7 @@ package model;
  *
  * @author wellington
  */
-public class ModelCadProduto {
+public class ModelProduto {
     
     
 }

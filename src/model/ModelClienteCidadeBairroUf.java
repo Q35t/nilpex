@@ -22,6 +22,26 @@ public class ModelClienteCidadeBairroUf {
     private String cidade;
     private String uf;
     private String cep;
+    private String endereco;
+    private String complemento;
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+    
+    
 
     public int getId() {
         return id;

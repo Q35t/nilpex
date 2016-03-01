@@ -9,25 +9,25 @@ import conexao.ConexaoJdbc;
 import java.sql.*;
 import java.util.*;
 import javax.swing.JOptionPane;
-import model.ModelCadCidade;
+import model.ModelCidade;
 import util.InterfaceCrud;
 
 /**
  *
  * @author wellington
  */
-public class ControllerCadCidade implements InterfaceCrud{
+public class ControllerCidade implements InterfaceCrud{
     
-    private ModelCadCidade mCadCidade;
+    private ModelCidade mCadCidade;
     private Connection con;
     
-    public ControllerCadCidade(){
+    public ControllerCidade(){
        this.con = ConexaoJdbc.getConexao();
     }
 
     @Override
     public void insert(Object o) {
-       this.mCadCidade = (ModelCadCidade) o;
+       this.mCadCidade = (ModelCidade) o;
        String sql = "INSERT INTO tab_cadcidade (cid_nome,cid_idestado) VALUES (?,?)";
        try{
            PreparedStatement ps = this.con.prepareStatement(sql);
@@ -45,7 +45,7 @@ public class ControllerCadCidade implements InterfaceCrud{
 
     @Override
     public void update(Object o) {
-        this.mCadCidade = (ModelCadCidade) o;
+        this.mCadCidade = (ModelCidade) o;
         String sql = "update tab_cadcidade set cid_nome = ?, cid_idestado= ? where cid_id = ? ";
         try{
             PreparedStatement ps = this.con.prepareStatement(sql);
@@ -66,7 +66,7 @@ public class ControllerCadCidade implements InterfaceCrud{
 
     @Override
     public void delete(Object o) {
-        this.mCadCidade = (ModelCadCidade) o;
+        this.mCadCidade = (ModelCidade) o;
         String sql = "delete from tab_cadcidade where cid_id = ?";
         
         try{
@@ -84,7 +84,7 @@ public class ControllerCadCidade implements InterfaceCrud{
     @Override
     public Object select(int i) {
         //estancia do modelo de cadastro de cidade
-        this.mCadCidade = new ModelCadCidade();
+        this.mCadCidade = new ModelCidade();
         //scrip sql
         String sql = "select * from tab_cadcidade where = ? ";
         PreparedStatement ps;
@@ -114,7 +114,7 @@ public class ControllerCadCidade implements InterfaceCrud{
 
     @Override
     public List select() {
-         List<ModelCadCidade> ListCadCidade = new ArrayList<ModelCadCidade>();
+        List<ModelCidade> ListCadCidade = new ArrayList<ModelCidade>();
         String sql = "select * from tab_cadcidade";
         PreparedStatement ps;
 
@@ -126,7 +126,7 @@ public class ControllerCadCidade implements InterfaceCrud{
             // e equanto houver cadastro vai para o próximo
             //preenchendo a table do ViewCadCidade
             while (rs.next()) {
-                this.mCadCidade = new ModelCadCidade();
+                this.mCadCidade = new ModelCidade();
                 //rs retorna todos os dados do banco de cada campo
                 //para mCadCidade que mostra na tabela ViewCadCidade
                 this.mCadCidade.setCid_id(rs.getInt("cid_id"));

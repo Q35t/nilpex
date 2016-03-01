@@ -5,18 +5,33 @@
  */
 package view;
 
+import controller.ControllerFornecedor;
+import controller.ControllerFornecedorCidadeBairroUf;
+import javax.swing.JOptionPane;
+import model.ModelFornecedor;
+import model.ModelFornecedorCidadeBairroUf;
+
 /**
  *
  * @author wellington
  */
 public class ViewCadFornecedor extends javax.swing.JFrame {
-
+    
+    private ModelFornecedor mCadFornecedor;
+    private ControllerFornecedor cCadFornecedor;
+    
+    private ModelFornecedorCidadeBairroUf mForCidBaiUf;
+    private ControllerFornecedorCidadeBairroUf cForCidBaiUf;
+    
     /**
      * Creates new form ViewCadFornecedor
      */
     public ViewCadFornecedor() {
         initComponents();
         setLocationRelativeTo(null);
+        
+        this.mCadFornecedor = new ModelFornecedor();
+        this.cCadFornecedor = new ControllerFornecedor();
     }
 
     /**
@@ -313,6 +328,138 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btSalvarActionPerformed
 
+    /*================================================OUTROS METODOS========================================*/
+    //metodo para desabilitar componentes
+    private void desabilitarcomponentes(){//inicio
+        txtnome.setEditable(false);
+        txtcpf.setEditable(false);
+        txtemail.setEditable(false);
+        txttelefone.setEditable(false);
+        txtcelular.setEditable(false);
+        txtendereco.setEditable(false);
+        txtnumcasa.setEditable(false);;
+        txtcomplemento.setEditable(false);
+        txtcep.setEditable(false);
+        
+        cbbairro.setEnabled(false);
+        cbcidade.setEnabled(false);
+        cbuf.setEnabled(false);
+        
+        btCancelar.setEnabled(false);
+        btSalvar.setEnabled(false);
+        
+        btNovo.setEnabled(true);
+        btEditar.setEnabled(true);
+        btExcluir.setEnabled(true);
+        
+
+    }//fim metodo desabilitarcomponentes
+    
+    //metodo habilitar componentes
+    private void habilitacomponentes(){
+        
+        txtnome.setEditable(true);
+        txtcpf.setEditable(true);
+        txtemail.setEditable(true);
+        txttelefone.setEditable(true);
+        txtcelular.setEditable(true);
+        txtendereco.setEditable(true);
+        txtnumcasa.setEditable(true);
+        txtcomplemento.setEditable(true);
+        txtcep.setEditable(true);
+        
+        cbbairro.setEnabled(true);
+        cbcidade.setEnabled(true);
+        cbuf.setEnabled(true);
+        
+        btCancelar.setEnabled(true);
+        btSalvar.setEnabled(true);
+        
+        btNovo.setEnabled(false);
+        btEditar.setEnabled(false);
+        btExcluir.setEnabled(false);
+        
+    }//fim metodo de habilitar componentes
+    
+    //metodo para limpar campos
+    private void limpartela(){//incio
+        txtcodigo.setText("");
+        txtnome.setText("");
+        txtcpf.setText("");
+        txtemail.setText("");
+        txttelefone.setText("");
+        txtcelular.setText("");
+        txtendereco.setText("");
+        txtnumcasa.setText("");
+        txtcomplemento.setText("");
+        txtcep.setText("");
+    }//fim do metodo limpa campos
+    
+        //metodo para obter dados do campos de texto
+    //retorna o objeto do modelo cliente
+    //o controle recebe o modelo, para cadastrar autlizar ou excluir
+    private ModelFornecedor montarForcedor(String funcao){
+	//modelo
+	this.mCadFornecedor = new ModelFornecedor();
+	//codicao
+            if(funcao.equals("salvar")){
+		this.mCadFornecedor.setFor_nome(txtnome.getText());
+		this.mCadFornecedor.setFor_cnpj_cpf(txtcpf.getText());
+		this.mCadFornecedor.setFor_email(txtemail.getText());
+		this.mCadFornecedor.setFor_telefone(txttelefone.getText());
+		this.mCadFornecedor.setFor_telcomercial(txtcelular.getText());
+		this.mCadFornecedor.setFor_endereco(txtendereco.getText());
+		this.mCadFornecedor.setFor_num(txtnumcasa.getText());
+		this.mCadFornecedor.setFor_complemento(txtcomplemento.getText());
+		this.mCadFornecedor.setFor_idbairro(cbbairro.getSelectedIndex());
+		this.mCadFornecedor.setFor_idcidade(cbcidade.getSelectedIndex());
+		this.mCadFornecedor.setFor_idestado(cbuf.getSelectedIndex());
+		this.mCadFornecedor.setFor_cep(txtcep.getText());
+		}
+            else{	
+		this.mCadFornecedor.setFor_nome(txtnome.getText());
+		this.mCadFornecedor.setFor_cnpj_cpf(txtcpf.getText());
+		this.mCadFornecedor.setFor_email(txtemail.getText());
+		this.mCadFornecedor.setFor_telefone(txttelefone.getText());
+		this.mCadFornecedor.setFor_telcomercial(txtcelular.getText());
+		this.mCadFornecedor.setFor_endereco(txtendereco.getText());
+		this.mCadFornecedor.setFor_num(txtnumcasa.getText());
+		this.mCadFornecedor.setFor_complemento(txtcomplemento.getText());
+		this.mCadFornecedor.setFor_idbairro(cbbairro.getSelectedIndex());
+		this.mCadFornecedor.setFor_idcidade(cbcidade.getSelectedIndex());
+		this.mCadFornecedor.setFor_idestado(cbuf.getSelectedIndex());
+		this.mCadFornecedor.setFor_cep(txtcep.getText());
+                    if (this.txtcodigo.getText() != null && !this.txtcodigo.getText().equals("")) {
+			this.mCadFornecedor.setFor_id(Integer.parseInt(this.txtcodigo.getText()));
+                    }
+			
+		}
+		//retorno do objeto modelo
+		return this.mCadFornecedor;
+    }//fim metodo para construir tela
+    
+     //pegar dados da tabela e retorna para os campos
+    private void pegadadosdatabela(){
+     int linha = table.getSelectedRow();
+     if(linha >= 0){
+     //table retona a index da coluna (linha,coluna)
+        txtcodigo.setText(""+table.getValueAt(linha, 0));
+        txtnome.setText(""+table.getValueAt(linha, 1));
+        txtcpf.setText(""+table.getValueAt(linha, 2));
+        txtemail.setText(""+table.getValueAt(linha, 3));
+        txttelefone.setText(""+table.getValueAt(linha, 4));
+        txtcelular.setText(""+table.getValueAt(linha, 5));
+        txtendereco.setText(""+table.getValueAt(linha, 6));
+        txtnumcasa.setText(""+table.getValueAt(linha, 7));
+        txtcomplemento.setText(""+table.getValueAt(linha, 8));
+        txtcep.setText(""+table.getValueAt(linha, 12));
+     }
+     else{
+         JOptionPane.showMessageDialog(null, "Selecione um campo na tabela!");
+         desabilitarcomponentes();
+     }
+    }
+    
     /**
      * @param args the command line arguments
      */

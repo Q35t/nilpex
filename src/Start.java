@@ -1,4 +1,10 @@
 
+
+import com.jtattoo.plaf.aluminium.AluminiumLookAndFeel;
+import com.jtattoo.plaf.smart.SmartLookAndFeel;
+import com.jtattoo.plaf.texture.TextureLookAndFeel;
+import java.util.Properties;
+import javax.swing.UIManager;
 import view.ViewPrincipal;
 import view.ViewSplash;
 
@@ -15,6 +21,23 @@ import view.ViewSplash;
 public class Start {
     
     public static void main(String args[]){
+        try {
+			Properties props = new Properties();
+			props.put("logoString", " ");
+                        //props.put("windowDecoration","");
+			//AluminiumLookAndFeel.setCurrentTheme(props);
+                        //UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
+                        //SmartLookAndFeel.setCurrentTheme(props);
+			//UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
+                        //SmartLookAndFeel.setCurrentTheme(props);
+			//UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
+                        //TextureLookAndFeel.setCurrentTheme(props);
+			//UIManager.setLookAndFeel("com.jtattoo.plaf.texture.TextureLookAndFeel");
+                        //UIManager.setLookAndFeel("de.javasoft.plaf.synthetica.SyntheticaLookAndFeel");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         new ViewSplash().setVisible(true);
         
     }

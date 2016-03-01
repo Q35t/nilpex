@@ -9,7 +9,7 @@ package model;
  *
  * @author wellington
  */
-public class ModelCadCliente {
+public class ModelCliente {
     private int cli_id;//codigo do cliente
     private String cli_nome;//nome do cliente
     private String cli_cpf;//cpf do cliente

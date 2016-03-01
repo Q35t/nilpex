@@ -9,7 +9,7 @@ package model;
  *
  * @author wellington
  */
-public class ModelCadFornecedor {
+public class ModelFornecedor {
     
     private int for_id;
     private String for_nome;

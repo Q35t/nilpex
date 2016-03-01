@@ -5,45 +5,53 @@
  */
 package view;
 
-import model.*;
-import controller.*;
-import java.util.*;
-import javax.swing.JOptionPane;
+import controller.ControllerBairro;
+import controller.ControllerBairroCidadeEstado;
+import controller.ControllerCidade;
+import controller.ControllerEstado;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ListSelectionModel;
+import model.ModelBairro;
+import model.ModelBairroCidadeEstado;
+import model.ModelCidade;
+import model.ModelEstado;
 import util.ModeloTabela;
 
 /**
  *
  * @author wellington
  */
-public class ViewCadCidade extends javax.swing.JFrame {
+public class ViewCadBairro extends javax.swing.JFrame {
+    
     
     private String funcao = "salvar";
     private String funcao2;
     
+    private ModelBairroCidadeEstado mBaCiEs;
+    private ControllerBairroCidadeEstado cBaiCiEs;
     
+    private ControllerCidade cCidade;
     private ControllerEstado cEstado;
-    private ModelCidade mCadCidade;
-    private ControllerCidade cCadCidade;
     
-    private ArrayList<ModelEstado> listaModelEstados = new ArrayList<ModelEstado>();
-    private ModelCidadeEstado mCidadeEstado;
-    private ControllerCidadeEstado cCidadeEstado;
-   
+    private ModelBairro mBairro;
     
     /**
-     * Creates new form ViewCadCidade
+     * Creates new form ViewCadBairro
      */
-    public ViewCadCidade() {
+    public ViewCadBairro() {
         initComponents();
-        setLocationRelativeTo(null);//posicionar tela no centro
-        txtcodigo.setEditable(false);//não editavel
-        desabilitarcomponentes();
+        setLocationRelativeTo(null);
+        txtcodigo.setEditable(false);
         preenchertabela();
+        listarCidades();
         listarEstados();
         
-        mCadCidade = new ModelCidade();
-        cCadCidade = new ControllerCidade();
+        this.cCidade = new ControllerCidade();
+        this.cEstado = new ControllerEstado();
+        
+        this.mBairro = new ModelBairro();
+        
     }
 
     /**
@@ -55,12 +63,12 @@ public class ViewCadCidade extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lbcodigo = new javax.swing.JLabel();
         txtcodigo = new javax.swing.JTextField();
-        lbuf = new javax.swing.JLabel();
+        lbcodigo = new javax.swing.JLabel();
         cbuf = new javax.swing.JComboBox<>();
-        lbcidade = new javax.swing.JLabel();
-        txtcidade = new javax.swing.JTextField();
+        lbuf = new javax.swing.JLabel();
+        txtbairro = new javax.swing.JTextField();
+        lbbairro = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         btCancelar = new javax.swing.JButton();
@@ -68,15 +76,16 @@ public class ViewCadCidade extends javax.swing.JFrame {
         btEditar = new javax.swing.JButton();
         btNovo = new javax.swing.JButton();
         btSalvar = new javax.swing.JButton();
+        cbcidade = new javax.swing.JComboBox<>();
+        lbcidade = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Cadastro de Cidade");
 
         lbcodigo.setText("Código:");
 
         lbuf.setText("UF:");
 
-        lbcidade.setText("Cidade:");
+        lbbairro.setText("Nome do Bairro:");
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -126,6 +135,8 @@ public class ViewCadCidade extends javax.swing.JFrame {
             }
         });
 
+        lbcidade.setText("Cidade");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -137,17 +148,13 @@ public class ViewCadCidade extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbcodigo)
                             .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtbairro)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbuf)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(cbuf, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(txtcidade)
+                                .addComponent(lbbairro)
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbcidade)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -157,7 +164,17 @@ public class ViewCadCidade extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btNovo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btSalvar)))
+                        .addComponent(btSalvar))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lbcidade)
+                                .addGap(0, 171, Short.MAX_VALUE))
+                            .addComponent(cbcidade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbuf)
+                            .addComponent(cbuf, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -166,15 +183,19 @@ public class ViewCadCidade extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbcodigo)
-                    .addComponent(lbuf))
+                    .addComponent(lbbairro))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbuf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtbairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbcidade)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtcidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbuf)
+                    .addComponent(lbcidade))
+                .addGap(5, 5, 5)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbuf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbcidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -184,95 +205,37 @@ public class ViewCadCidade extends javax.swing.JFrame {
                     .addComponent(btEditar)
                     .addComponent(btNovo)
                     .addComponent(btSalvar))
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addGap(0, 13, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
-        desabilitarcomponentes();//desabilita botoes e campos de texto
-        limpartela();//limpa a tela
+        
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
-         //retorna o indice da linha
-         int linha = table.getSelectedRow();
-                //pergunta
-            if(linha >= 0){
-                String descricao = "Deseja excluir a Cidade:"+table.getValueAt(linha,1)+"?";
-                //obtem o valor verdadeiro ou falso (1,0)
-                int opcao = JOptionPane.showConfirmDialog(null,descricao,"Atenção",JOptionPane.YES_NO_OPTION);
-                    //faz a comparação
-                    if(opcao == JOptionPane.YES_OPTION){
-                        //pega o codigo do da cidade
-                        
-                        this.mCadCidade.setCid_id((int) (table.getValueAt(linha, 0)));
-                        //passa para o delete
-                        this.cCadCidade.delete(this.mCadCidade);
-                        //assim que o a cidade e excluido
-                        //atualiza a tebela
-                        preenchertabela();
-                    }
-                    else{
-                        //senao quiser excluir a cidade
-                        //desabilita os camppos
-                       desabilitarcomponentes();
-                    }
-            }
-            else{
-               JOptionPane.showMessageDialog(null, "Selecione algum campo na tabela!");
-               desabilitarcomponentes();
-            }
+       
     }//GEN-LAST:event_btExcluirActionPerformed
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
-        funcao = "editar";//add a função editar para a variavel
-        habilitacomponentes();//habilita campos e botoes
-        pegadadosdatabela();//e recupera os dados da tabela
+       
     }//GEN-LAST:event_btEditarActionPerformed
 
     private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
-        habilitacomponentes();
-        //limpa a tela
-        limpartela();
-        //add a fução novo
-        funcao = "salvar";
+       
     }//GEN-LAST:event_btNovoActionPerformed
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        //para salvar depende da funcao se recebeu salvar ou editar
-            //se funcao receber salvar ao clickar no botao novo ele excuta
-            //o insert
-            if(funcao.equals("salvar")){
-               //insert recebe os dados dos campos de texto
-               //retorna para a insersão ao banco
-               this.cCadCidade.insert(montarCidade("salvar"));
-               //apos desabilita os campos
-               habilitacomponentes();
-               //limpa a tela
-               limpartela();
-               //atualiza a tabela
-               preenchertabela();
-               
-            }
-            else{//senao for salvar, foi clickado no boatao editar
-               //e o metodo montar tela pega os dados do campo
-               //e retorna para update atualizar as informações do
-               //usuario
-               this.cCadCidade.update(montarCidade("editar"));
-               //desabilita os campos
-               desabilitarcomponentes();
-               //limpa a tela
-               limpartela();
-               //atualiza a tabela
-               preenchertabela();
-            }
+        
     }//GEN-LAST:event_btSalvarActionPerformed
+    
     /*================================================OUTROS METODOS========================================*/
     //metodo para desabilitar componentes
     private void desabilitarcomponentes(){//inicio
-        txtcidade.setEditable(false);
+        txtbairro.setEditable(false);
+        cbcidade.setEnabled(false);
         cbuf.setEnabled(false);
         
         btCancelar.setEnabled(false);
@@ -284,10 +247,12 @@ public class ViewCadCidade extends javax.swing.JFrame {
         
 
     }//fim metodo desabilitarcomponentes
+    
     //metodo habilitar componentes
     private void habilitacomponentes(){
         
-        txtcidade.setEditable(true);
+        txtcodigo.setEditable(true);
+        cbcidade.setEnabled(true);
         cbuf.setEnabled(true);
         
         btCancelar.setEnabled(true);
@@ -299,83 +264,66 @@ public class ViewCadCidade extends javax.swing.JFrame {
         
     }//fim metodo de habilitar componentes
     
-      //metodo para limpar campos
+    //metodo para limpar campos
     private void limpartela(){//incio
         txtcodigo.setText("");
-        txtcidade.setText("");
+        cbcidade.setSelectedIndex(0);
+        cbuf.setSelectedIndex(0);
     }//fim do metodo limpa campos
     
-    private ModelCidade montarCidade(String funcao){
+    private ModelBairro montarBairro(String funcao){
 	//modelo
-	this.mCadCidade = new ModelCidade();
+	mBairro = new ModelBairro();
 	//codicao
             if(funcao.equals("salvar")){
-		this.mCadCidade.setCid_nome(txtcidade.getText());
-		this.mCadCidade.setCid_idestado(cbuf.getSelectedIndex()+1);
+		mBairro.setBairro_nome(txtbairro.getText());
+		mBairro.setBairro_idcidade(cbcidade.getSelectedIndex()+1);
+                mBairro.setBairro_iduf(cbuf.getSelectedIndex()+1);
 		}
             else{	
-		this.mCadCidade.setCid_nome(txtcidade.getText());
-                this.mCadCidade.setCid_idestado((cbuf.getSelectedIndex()+1));
-                System.out.println(cbuf.getSelectedIndex());
-                    //se ele não for nulo e nao estiver vazio
-                    if (this.txtcodigo.getText() != null && !this.txtcodigo.getText().equals("")) {
-                        this.mCadCidade.setCid_id(Integer.parseInt(this.txtcodigo.getText()));
+		mBairro.setBairro_nome(txtbairro.getText());
+		mBairro.setBairro_idcidade(cbcidade.getSelectedIndex()+1);
+                mBairro.setBairro_iduf(cbuf.getSelectedIndex()+1);
+                if (this.txtcodigo.getText() != null && !this.txtcodigo.getText().equals("")) {
+			mBairro.setBairro_id(Integer.parseInt(this.txtcodigo.getText()));
                     }
 			
-		}
+            }
 		//retorno do objeto modelo
-		return this.mCadCidade;
+		return mBairro;
     }//fim metodo para construir tela
     
-    private void pegadadosdatabela(){
-     int linha = table.getSelectedRow();
-     
-     if(linha >= 0 ){
-        //table retona a index da coluna (linha,coluna)
-        txtcodigo.setText(""+table.getValueAt(linha, 0));
-        txtcidade.setText(""+table.getValueAt(linha, 1));
-        cbuf.setSelectedItem(""+table.getValueAt(linha, 2));
-     }
-     else{
-         JOptionPane.showMessageDialog(null, "Selecione algum campo na tabela!");
-         desabilitarcomponentes();
-     }
-     
-    }
-    
-    //metodo para modelo a tabela do form
-    //e preencher o mesmo
-    private void preenchertabela(){
+     private void preenchertabela(){
 		
 	//ConexaoJdbc.executarSQL("Select * from cad_categoria");
-	this.mCidadeEstado = new ModelCidadeEstado();
-        this.cCidadeEstado = new ControllerCidadeEstado();
-		
+	this.mBaCiEs = new ModelBairroCidadeEstado();
+        this.cBaiCiEs = new ControllerBairroCidadeEstado();
+        
 	//Lista de clientes recebe do controle o retorno de uma consulta no banco
-	List<ModelCidadeEstado> cidadesEstados = this.cCidadeEstado.select();
+	List<ModelBairroCidadeEstado> BaiCiEs = cBaiCiEs.select();
 	//criar o vetor dados para preencher a tabela
 	ArrayList dados = new ArrayList();
 		
 	//para preencher as linhas da tabela com os dados
-            for (ModelCidadeEstado model : cidadesEstados) {
+            for (ModelBairroCidadeEstado model : BaiCiEs) {
              //add cada dado em linhas da table
-                dados.add(new Object[]{model.getCid_id(),model.getCid_nome(),model.getEstado_uf(),model.getEstado_nome()});//fim dados.add
+                dados.add(new Object[]{model.getId(),model.getBairro_nome(),model.getCid_nome(),model.getUf()});//fim dados.add
             }//fim for
 		
             //seta um modelo da tabela com os dados em linhae colunas
-            table.setModel(new ModeloTabela(dados,new String[] {"Código", "Cidade", "UF","Nome Estado"}));
+            table.setModel(new ModeloTabela(dados,new String[] {"Código", "Bairro", "Cidade", "UF"}));
             table.getTableHeader().setReorderingAllowed(false);
             //para preencher cada campo com lagura de 50 e impedir que
             //seja remensionado false
                 for(int i=0;i<4;i++){
 		//table.getColumnModel().getColumn(i).setResizable(false);
-                table.getColumnModel().getColumn(i).setPreferredWidth(178);
+                table.getColumnModel().getColumn(i).setPreferredWidth(100);
                  }
 		table.setAutoResizeMode(table.AUTO_RESIZE_OFF);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-	}//fim metodo preenchertabela
-    
-    //preencher combobox
+    }//fim metodo preenchertabela
+     
+     
     private void listarEstados(){
         this.cEstado = new ControllerEstado();
         List<ModelEstado> listEstado  = cEstado.select();
@@ -384,10 +332,17 @@ public class ViewCadCidade extends javax.swing.JFrame {
             cbuf.addItem(mEstado.getEstado_uf());
         }
     }
+    private void listarCidades(){
+        this.cCidade = new ControllerCidade();
+        List<ModelCidade> listCidade = this.cCidade.select();
+        cbcidade.removeAllItems();
+        for(ModelCidade m : listCidade){
+            cbcidade.addItem(m.getCid_nome());
+        }
+    }
     
-        
-    /*============================================================FIM DE OUTROS METODOS==================================*/
     
+    /*================================================== FIM ====================================================*/
     /**
      * @param args the command line arguments
      */
@@ -405,23 +360,20 @@ public class ViewCadCidade extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ViewCadCidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewCadBairro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ViewCadCidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewCadBairro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ViewCadCidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewCadBairro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ViewCadCidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewCadBairro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ViewCadCidade().setVisible(true);
+                new ViewCadBairro().setVisible(true);
             }
         });
     }
@@ -432,13 +384,15 @@ public class ViewCadCidade extends javax.swing.JFrame {
     private javax.swing.JButton btExcluir;
     private javax.swing.JButton btNovo;
     private javax.swing.JButton btSalvar;
+    private javax.swing.JComboBox<String> cbcidade;
     private javax.swing.JComboBox<String> cbuf;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbbairro;
     private javax.swing.JLabel lbcidade;
     private javax.swing.JLabel lbcodigo;
     private javax.swing.JLabel lbuf;
     private javax.swing.JTable table;
-    private javax.swing.JTextField txtcidade;
+    private javax.swing.JTextField txtbairro;
     private javax.swing.JTextField txtcodigo;
     // End of variables declaration//GEN-END:variables
 }
