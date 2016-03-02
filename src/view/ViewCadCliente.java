@@ -15,12 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
-import model.ModelBairro;
-import model.ModelCidade;
-import model.ModelCliente;//Modelo de cliente dabase de dados
-import model.ModelCidadeEstado;
-import model.ModelClienteCidadeBairroUf;
-import model.ModelEstado;
+import model.*;
 import util.ModeloTabela;
 
 /**
@@ -115,7 +110,7 @@ public class ViewCadCliente extends javax.swing.JFrame {
         btNovo = new javax.swing.JButton();
         btSalvar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Cliente");
 
         lbcodigo.setText("Código:");
@@ -408,6 +403,8 @@ public class ViewCadCliente extends javax.swing.JFrame {
                limpartela();
                //atualiza a tabela
                preenchertabela();
+               desabilitarcomponentes();
+               limpartela();
                
             }
             else{//senao for salvar, foi clickado no boatao editar
@@ -562,22 +559,22 @@ public class ViewCadCliente extends javax.swing.JFrame {
     private void preenchertabela(){
 		
 	//ConexaoJdbc.executarSQL("Select * from cad_categoria");
-	mCadCliente = new ModelCliente();
-	cCadCliente = new ControllerCliente();
+	mCliCiBaUf = new ModelClienteCidadeBairroUf();
+	cCliCiBaUf = new ControllerClienteCidadeBairroUf();
 		
 	//Lista de clientes recebe do controle o retorno de uma consulta no banco
-	List<ModelCliente> clientes = cCadCliente.select();
+	List<ModelClienteCidadeBairroUf> m = cCliCiBaUf.select();
 	//criar o vetor dados para preencher a tabela
 	ArrayList dados = new ArrayList();
 		
 	//para preencher as linhas da tabela com os dados
-            for (ModelCliente model : clientes) {
+            for (ModelClienteCidadeBairroUf model : m) {
              //add cada dado em linhas da table
-                dados.add(new Object[]{model.getCli_id(),model.getCli_nome(),model.getCli_cpf(),
-                model.getCli_email(),model.getCli_telefone(),model.getCli_celular(),
-		model.getCli_endereco(),model.getCli_numcasa(),model.getCli_complemento(),
-		model.getCli_bairro(), model.getCli_idcidade(), model.getCli_idestado(),
-		model.getCli_cep()
+                dados.add(new Object[]{model.getId(),model.getNome(),model.getCpf(),
+                model.getEmail(),model.getTelefone(),model.getCelular(),
+		model.getEndereco(),model.getNumcasa(),model.getComplemento(),
+		model.getBairro(), model.getCidade(), model.getUf(),
+		model.getCep()
                 });//fim dados.add
             }//fim for
 		

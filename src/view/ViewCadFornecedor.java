@@ -10,19 +10,25 @@ import controller.ControllerCidade;
 import controller.ControllerEstado;
 import controller.ControllerFornecedor;
 import controller.ControllerFornecedorCidadeBairroUf;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import model.ModelBairro;
 import model.ModelCidade;
 import model.ModelEstado;
 import model.ModelFornecedor;
 import model.ModelFornecedorCidadeBairroUf;
+import util.ModeloTabela;
 
 /**
  *
  * @author wellington
  */
 public class ViewCadFornecedor extends javax.swing.JFrame {
+    
+    private String funcao = "salvar";
+    private String funcao2;
     
     private ModelFornecedor mCadFornecedor;
     private ControllerFornecedor cCadFornecedor;
@@ -40,6 +46,9 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
     public ViewCadFornecedor() {
         initComponents();
         setLocationRelativeTo(null);
+        txtcodigo.setEditable(false);
+        desabilitarcomponentes();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         
         this.mCadFornecedor = new ModelFornecedor();
         this.cCadFornecedor = new ControllerFornecedor();
@@ -48,6 +57,7 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
         cBairro = new ControllerBairro();
         cEstado = new ControllerEstado();
         
+        preenchertabela();
         listarBairro();
         listarCidades();
         listarEstados();
@@ -98,7 +108,7 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
         btNovo = new javax.swing.JButton();
         btSalvar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Cadastro de Fornecedor");
 
         lbcodigo.setText("Código:");
@@ -328,23 +338,83 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
-        
+        desabilitarcomponentes();//desabilita botoes e campos de texto
+        limpartela();//limpa a tela
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
-       
+        //retorna o indice da linha
+        int linha = table.getSelectedRow();
+            if(linha >= 0){
+                //pergunta
+                String descricao = "Deseja excluir o Forncedor:"+table.getValueAt(linha,1)+"?";
+                //obtem o valor verdadeiro ou falso (1,0)
+                int opcao = JOptionPane.showConfirmDialog(null,descricao,"Atenção",JOptionPane.YES_NO_OPTION);
+                    //faz a comparação
+                    if(opcao == JOptionPane.YES_OPTION){
+                        //pega o codigo do cliente
+                        mCadFornecedor.setFor_id((int) (table.getValueAt(linha, 0)));
+                        //passa para o delete
+                        cCadFornecedor.delete(mCadFornecedor);
+                        //assim que o usuario e excluido
+                        //atualiza a tebela
+                        preenchertabela();
+                    }
+                    else{
+                        //senao quiser excluir cliente
+                        //desabilita os camppos
+                       desabilitarcomponentes();
+                    }
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Selecione um campo no banco de dados!");
+            }
     }//GEN-LAST:event_btExcluirActionPerformed
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
-        
+        funcao = "editar";//add a função editar para a variavel
+        habilitacomponentes();//habilita campos e botoes
+        pegadadosdatabela();//e recupera os dados da tabela
     }//GEN-LAST:event_btEditarActionPerformed
 
     private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
- 
+        habilitacomponentes();
+        //limpa a tela
+        limpartela();
+        //add a fução novo
+        funcao = "salvar";
     }//GEN-LAST:event_btNovoActionPerformed
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-
+         //para salvar depende da funcao se recebeu salvar ou editar
+            //se funcao receber salvar ao clickar no botao novo ele excuta
+            //o insert
+            if(funcao.equals("salvar")){
+               //insert recebe os dados dos campos de texto
+               //retorna para a insersão ao banco
+               cCadFornecedor.insert(montarForcedor("salvar"));
+               //apos desabilita os campos
+               habilitacomponentes();
+               //limpa a tela
+               limpartela();
+               //atualiza a tabela
+               preenchertabela();
+               desabilitarcomponentes();
+               limpartela();
+               
+            }
+            else{//senao for salvar, foi clickado no boatao editar
+               //e o metodo montar tela pega os dados do campo
+               //e retorna para update atualizar as informações do
+               //usuario
+               cCadFornecedor.update(montarForcedor("editar"));
+               //desabilita os campos
+               desabilitarcomponentes();
+               //limpa a tela
+               limpartela();
+               //atualiza a tabela
+               preenchertabela();
+            }
     }//GEN-LAST:event_btSalvarActionPerformed
 
     /*================================================OUTROS METODOS========================================*/
@@ -430,9 +500,9 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
 		this.mCadFornecedor.setFor_endereco(txtendereco.getText());
 		this.mCadFornecedor.setFor_num(txtnumcasa.getText());
 		this.mCadFornecedor.setFor_complemento(txtcomplemento.getText());
-		this.mCadFornecedor.setFor_idbairro(cbbairro.getSelectedIndex());
-		this.mCadFornecedor.setFor_idcidade(cbcidade.getSelectedIndex());
-		this.mCadFornecedor.setFor_idestado(cbuf.getSelectedIndex());
+		this.mCadFornecedor.setFor_idbairro(cbbairro.getSelectedIndex()+1);
+		this.mCadFornecedor.setFor_idcidade(cbcidade.getSelectedIndex()+1);
+		this.mCadFornecedor.setFor_idestado(cbuf.getSelectedIndex()+1);
 		this.mCadFornecedor.setFor_cep(txtcep.getText());
 		}
             else{	
@@ -444,9 +514,9 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
 		this.mCadFornecedor.setFor_endereco(txtendereco.getText());
 		this.mCadFornecedor.setFor_num(txtnumcasa.getText());
 		this.mCadFornecedor.setFor_complemento(txtcomplemento.getText());
-		this.mCadFornecedor.setFor_idbairro(cbbairro.getSelectedIndex());
-		this.mCadFornecedor.setFor_idcidade(cbcidade.getSelectedIndex());
-		this.mCadFornecedor.setFor_idestado(cbuf.getSelectedIndex());
+		this.mCadFornecedor.setFor_idbairro(cbbairro.getSelectedIndex()+1);
+		this.mCadFornecedor.setFor_idcidade(cbcidade.getSelectedIndex()+1);
+		this.mCadFornecedor.setFor_idestado(cbuf.getSelectedIndex()+1);
 		this.mCadFornecedor.setFor_cep(txtcep.getText());
                     if (this.txtcodigo.getText() != null && !this.txtcodigo.getText().equals("")) {
 			this.mCadFornecedor.setFor_id(Integer.parseInt(this.txtcodigo.getText()));
@@ -478,6 +548,42 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
          desabilitarcomponentes();
      }
     }
+    
+     private void preenchertabela(){
+		
+	//ConexaoJdbc.executarSQL("Select * from cad_categoria");
+	mForCidBaiUf = new ModelFornecedorCidadeBairroUf();
+	cForCidBaiUf = new ControllerFornecedorCidadeBairroUf();
+		
+	//Lista de clientes recebe do controle o retorno de uma consulta no banco
+	List<ModelFornecedorCidadeBairroUf> m = cForCidBaiUf.select();
+	//criar o vetor dados para preencher a tabela
+	ArrayList dados = new ArrayList();
+		
+	//para preencher as linhas da tabela com os dados
+            for (ModelFornecedorCidadeBairroUf model : m) {
+             //add cada dado em linhas da table
+                dados.add(new Object[]{model.getId(),model.getNome(),model.getCnpj_cpf(),
+                model.getEmail(),model.getTelefone(),model.getTelcomercial(),
+		model.getEndereco(),model.getNum(),model.getComeplemento(),
+		model.getBairro(), model.getCidade(), model.getUf(),
+		model.getCep()
+                });//fim dados.add
+            }//fim for
+		
+            //seta um modelo da tabela com os dados em linhae colunas
+            table.setModel(new ModeloTabela(dados,new String[] {"Código", "Nome", "CPF", "E-mail", "Telefone", "Celular", "Endereço",
+				"Núm.Casa", "Complemento", "Bairro", "Cidade","UF", "CEP"}));
+            table.getTableHeader().setReorderingAllowed(false);
+            //para preencher cada campo com lagura de 50 e impedir que
+            //seja remensionado false
+                for(int i=0;i<12;i++){
+		//table.getColumnModel().getColumn(i).setResizable(false);
+                table.getColumnModel().getColumn(i).setPreferredWidth(100);
+                 }
+		table.setAutoResizeMode(table.AUTO_RESIZE_OFF);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	}//fim metodo preenchertabela
     
     private void listarEstados(){
         this.cEstado = new ControllerEstado();

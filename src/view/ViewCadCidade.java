@@ -39,8 +39,10 @@ public class ViewCadCidade extends javax.swing.JFrame {
         setLocationRelativeTo(null);//posicionar tela no centro
         txtcodigo.setEditable(false);//não editavel
         desabilitarcomponentes();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         preenchertabela();
         listarEstados();
+        
         
         mCadCidade = new ModelCidade();
         cCadCidade = new ControllerCidade();
@@ -69,7 +71,7 @@ public class ViewCadCidade extends javax.swing.JFrame {
         btNovo = new javax.swing.JButton();
         btSalvar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Cidade");
 
         lbcodigo.setText("Código:");

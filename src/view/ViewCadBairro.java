@@ -46,6 +46,8 @@ public class ViewCadBairro extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         txtcodigo.setEditable(false);
         desabilitarcomponentes();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
         preenchertabela();
         listarCidades();
         listarEstados();
@@ -82,7 +84,7 @@ public class ViewCadBairro extends javax.swing.JFrame {
         cbcidade = new javax.swing.JComboBox<>();
         lbcidade = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lbcodigo.setText("Código:");
 
@@ -270,13 +272,15 @@ public class ViewCadBairro extends javax.swing.JFrame {
             if(funcao.equals("salvar")){
                //insert recebe os dados dos campos de texto
                //retorna para a insersão ao banco
-               this.cCidade.insert(montarBairro("salvar"));
+               this.cBairro.insert(montarBairro("salvar"));
                //apos desabilita os campos
                habilitacomponentes();
                //limpa a tela
                limpartela();
                //atualiza a tabela
                preenchertabela();
+               
+               desabilitarcomponentes();
                
             }
             else{//senao for salvar, foi clickado no boatao editar
