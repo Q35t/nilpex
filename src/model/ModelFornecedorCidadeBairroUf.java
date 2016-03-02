@@ -24,6 +24,24 @@ public class ModelFornecedorCidadeBairroUf {
     private String cidade;
     private String uf;
     private String cep;
+    private String endereco;
+    private String comeplemento;
+
+    public String getComeplemento() {
+        return comeplemento;
+    }
+
+    public void setComeplemento(String comeplemento) {
+        this.comeplemento = comeplemento;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
 
     public int getId() {
         return id;
