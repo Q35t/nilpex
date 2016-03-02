@@ -47,18 +47,19 @@ public class ControllerClienteCidadeBairroUf {
                 this.mCliCiBaUf = new ModelClienteCidadeBairroUf();
                 //rs retorna todos os dados do banco de cada campo
                 //para mEstado que mostra na tabela
-                this.mCliCiBaUf.setId(rs.getInt("tab_cadcliente.cli_id"));
-                this.mCliCiBaUf.setNome(rs.getString("tab_cadcliente.cli_nome"));
-                this.mCliCiBaUf.setEmail(rs.getString("tab_cadcliente.cli_email"));
-                this.mCliCiBaUf.setTelefone(rs.getString("tab_cadcliente.cli_telefone"));
-                this.mCliCiBaUf.setCelular(rs.getString("tab_cadcliente.cli_celular"));
-                this.mCliCiBaUf.setEndereco(rs.getString("tab_cadcliente.cli_endereco"));
-                this.mCliCiBaUf.setNumcasa(rs.getString("tab_cadcliente.cli_numcasa"));
-                this.mCliCiBaUf.setComplemento(rs.getString("tab_cadcliente.cli_complemento"));
-                this.mCliCiBaUf.setBairro(rs.getString("tab_cadbairro.bairro_nome"));
-                this.mCliCiBaUf.setCidade(rs.getString("tab_cadcidade.cid_nome"));
-                this.mCliCiBaUf.setUf(rs.getString(" tab_estado.estado_nome"));
-                this.mCliCiBaUf.setCep(rs.getString("tab_cadcliente.cli_cep"));
+                this.mCliCiBaUf.setId(rs.getInt("cli.cli_id"));
+                this.mCliCiBaUf.setNome(rs.getString("cli.cli_nome"));
+                this.mCliCiBaUf.setCpf(rs.getString("cli.cli_cpf"));
+                this.mCliCiBaUf.setEmail(rs.getString("cli.cli_email"));
+                this.mCliCiBaUf.setTelefone(rs.getString("cli.cli_telefone"));
+                this.mCliCiBaUf.setCelular(rs.getString("cli.cli_celular"));
+                this.mCliCiBaUf.setEndereco(rs.getString("cli.cli_endereco"));
+                this.mCliCiBaUf.setNumcasa(rs.getString("cli.cli_numcasa"));
+                this.mCliCiBaUf.setComplemento(rs.getString("cli.cli_complemento"));
+                this.mCliCiBaUf.setBairro(rs.getString("ba.bairro_nome"));
+                this.mCliCiBaUf.setCidade(rs.getString("cid.cid_nome"));
+                this.mCliCiBaUf.setUf(rs.getString("est.estado_nome"));
+                this.mCliCiBaUf.setCep(rs.getString("cli.cli_cep"));
                 
 
                 ListCliCiBaUf.add(this.mCliCiBaUf);
