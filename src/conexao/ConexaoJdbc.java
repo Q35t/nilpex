@@ -15,9 +15,9 @@ public class ConexaoJdbc {
     //Local do Banco de dados
     final private static String URL = "jdbc:mysql://localhost:3306/nilpex";
     //atributo Usuario recebendo o usuario do banco de dados
-    final private static String USUARIO = "wellington";
+    final private static String USUARIO = "root";
     //atributo senha recebe senha do usuario
-    final private static String SENHA = "@2w3n#";
+    final private static String SENHA = "81621615";
     //atributo de conexao
     private static Connection con;
     public static ResultSet rs;
@@ -68,6 +68,6 @@ public class ConexaoJdbc {
 
     public static void main(String args[]) {
         //teste de conexão com banco de dados
-        // ConexaoJdbc.getConexao();
+        //ConexaoJdbc.getConexao();
     }
 }
