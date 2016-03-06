@@ -13,29 +13,29 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import model.ModelClienteCidadeBairroUf;
+import model.ModelClienteCidadeUf;
 
 /**
  *
  * @author wellington
  */
-public class ControllerClienteCidadeBairroUf {
+public class ControllerClienteCidadeUf {
     
     //controle para tabela de clientes
     
     private Connection con;
-    private ModelClienteCidadeBairroUf mCliCiBaUf;
+    private ModelClienteCidadeUf mCliCiBaUf;
     
-    public ControllerClienteCidadeBairroUf(){
+    public ControllerClienteCidadeUf(){
         this.con = ConexaoJdbc.getConexao();
-        mCliCiBaUf = new ModelClienteCidadeBairroUf();
+        mCliCiBaUf = new ModelClienteCidadeUf();
     }
     
     public List select() {
-        List<ModelClienteCidadeBairroUf> ListCliCiBaUf = new ArrayList<ModelClienteCidadeBairroUf>();
+        List<ModelClienteCidadeUf> ListCliCiBaUf = new ArrayList<ModelClienteCidadeUf>();
         String sql = "SELECT cli.cli_id,cli.cli_nome,cli.cli_cpf,cli.cli_email,cli.cli_telefone,cli.cli_celular,\n" +
-                     "cli.cli_endereco,cli.cli_numcasa,cli.cli_complemento,ba.bairro_nome,cid.cid_nome,est.estado_nome, cli.cli_cep\n" +
-                     "FROM tab_cadcliente cli INNER JOIN tab_cadcidade cid ON cli.cli_idcidade = cid.cid_id INNER JOIN tab_estado est ON cli.cli_idestado = est.estado_id INNER JOIN tab_cadbairro ba ON cli.cli_idbairro = ba.bairro_id";
+                     "cli.cli_endereco,cli.cli_numcasa,cli.cli_complemento,cli.cli_bairro,cid.cid_nome,est.estado_uf, cli.cli_cep\n" +
+                     "FROM tab_cadcliente cli INNER JOIN tab_cadcidade cid ON cli.cli_idcidade = cid.cid_id INNER JOIN tab_estado est ON cli.cli_idestado = est.estado_id";
 
         try {
            
@@ -44,7 +44,7 @@ public class ControllerClienteCidadeBairroUf {
             ResultSet rs = ps.executeQuery();
            
             while (rs.next()) {
-                this.mCliCiBaUf = new ModelClienteCidadeBairroUf();
+                this.mCliCiBaUf = new ModelClienteCidadeUf();
                 //rs retorna todos os dados do banco de cada campo
                 //para mEstado que mostra na tabela
                 this.mCliCiBaUf.setId(rs.getInt("cli.cli_id"));
@@ -56,9 +56,9 @@ public class ControllerClienteCidadeBairroUf {
                 this.mCliCiBaUf.setEndereco(rs.getString("cli.cli_endereco"));
                 this.mCliCiBaUf.setNumcasa(rs.getString("cli.cli_numcasa"));
                 this.mCliCiBaUf.setComplemento(rs.getString("cli.cli_complemento"));
-                this.mCliCiBaUf.setBairro(rs.getString("ba.bairro_nome"));
+                this.mCliCiBaUf.setBairro(rs.getString("cli.cli_bairro"));
                 this.mCliCiBaUf.setCidade(rs.getString("cid.cid_nome"));
-                this.mCliCiBaUf.setUf(rs.getString("est.estado_nome"));
+                this.mCliCiBaUf.setUf(rs.getString("est.estado_uf"));
                 this.mCliCiBaUf.setCep(rs.getString("cli.cli_cep"));
                 
 

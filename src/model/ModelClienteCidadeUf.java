@@ -9,7 +9,7 @@ package model;
  *
  * @author wellington
  */
-public class ModelClienteCidadeBairroUf {
+public class ModelClienteCidadeUf {
     
     private int id;
     private String nome;

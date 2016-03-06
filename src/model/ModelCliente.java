@@ -17,7 +17,7 @@ public class ModelCliente {
     private String cli_endereco;//endereco do cliente
     private String cli_numcasa;
     private String cli_complemento;
-    private int cli_bairro;//bairro do cliente
+    private String cli_bairro;//bairro do cliente
     private int cli_idcidade;//refente a chaves estrangeira do banco
     private int cli_idestado;//refente a chaves estrangeira do banco
     private String cli_cep;//cep do cliente
@@ -77,11 +77,11 @@ public class ModelCliente {
         this.cli_complemento = cli_complemento;
     }
 
-    public int getCli_bairro() {
+    public String getCli_bairro() {
         return cli_bairro;
     }
 
-    public void setCli_bairro(int bairro) {
+    public void setCli_bairro(String bairro) {
         this.cli_bairro = bairro;
     }
 

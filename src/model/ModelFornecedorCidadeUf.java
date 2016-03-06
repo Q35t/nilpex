@@ -9,7 +9,7 @@ package model;
  *
  * @author wellington
  */
-public class ModelFornecedorCidadeBairroUf {
+public class ModelFornecedorCidadeUf {
     
     //modelo para a tabela de cadastro de fornecedores
     

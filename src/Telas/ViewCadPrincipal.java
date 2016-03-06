@@ -58,7 +58,7 @@ public class ViewCadPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        uJPanelImagem1.setImagem(new java.io.File("C:\\Users\\QU35T\\Pro_Pizzaria\\src\\pro_pizzaria\\Imagens\\pizza.jpg"));
+        uJPanelImagem1.setImagem(new java.io.File("/home/wellington/C:/Users/QU35T/Pro_Pizzaria/src/pro_pizzaria/Imagens/pizza.jpg"));
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());

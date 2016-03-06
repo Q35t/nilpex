@@ -18,7 +18,7 @@ public class ModelFornecedor {
     private String for_endereco;
     private String for_num;
     private String for_complemento;
-    private int for_idbairro;
+    private String for_bairro;
     private int for_idcidade;
     private int for_idestado;
     private String for_cep;
@@ -81,12 +81,12 @@ public class ModelFornecedor {
         this.for_complemento = for_complemento;
     }
 
-    public int getFor_idbairro() {
-        return for_idbairro;
+    public String getFor_bairro() {
+        return for_bairro;
     }
 
-    public void setFor_idbairro(int for_idbairro) {
-        this.for_idbairro = for_idbairro;
+    public void setFor_bairro(String for_bairro) {
+        this.for_bairro = for_bairro;
     }
 
     public int getFor_idcidade() {

@@ -13,29 +13,28 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import model.ModelFornecedorCidadeBairroUf;
+import model.ModelFornecedorCidadeUf;
 
 /**
  *
  * @author wellington
  */
-public class ControllerFornecedorCidadeBairroUf {
+public class ControllerFornecedorCidadeUf {
     
     //controle para a tabela de fornecedores
     private Connection con;
-    private ModelFornecedorCidadeBairroUf mForCiBaUf;
+    private ModelFornecedorCidadeUf mForCiBaUf;
     
-    public ControllerFornecedorCidadeBairroUf(){
+    public ControllerFornecedorCidadeUf(){
         this.con = ConexaoJdbc.getConexao();
-        mForCiBaUf = new ModelFornecedorCidadeBairroUf();
+        mForCiBaUf = new ModelFornecedorCidadeUf();
     }
     
     public List select() {
-        List<ModelFornecedorCidadeBairroUf> ListforCiBaUf = new ArrayList<ModelFornecedorCidadeBairroUf>();
+        List<ModelFornecedorCidadeUf> ListforCiBaUf = new ArrayList<ModelFornecedorCidadeUf>();
         String sql = "SELECT f.for_id,f.for_nome,f.for_cnpj_cpf,f.for_email,f.for_telefone,f.for_telcomercial,\n" +
-                     "f.for_endereco,f.for_num,f.for_complemento,b.bairro_nome,c.cid_nome,e.estado_nome,f.for_cep\n" +
+                     "f.for_endereco,f.for_num,f.for_complemento,f.for_bairro,c.cid_nome,e.estado_uf,f.for_cep\n" +
                      "FROM tab_cadfornecedor f INNER JOIN tab_cadcidade c ON f.for_idcidade = c.cid_id\n" +
-                     "INNER JOIN tab_cadbairro b ON f.for_idbairro = b.bairro_id\n" +
                      "INNER JOIN tab_estado e ON f.for_idestado = e.estado_id; ";
         
          try {
@@ -45,7 +44,7 @@ public class ControllerFornecedorCidadeBairroUf {
             ResultSet rs = ps.executeQuery();
            
             while (rs.next()) {
-                this.mForCiBaUf = new ModelFornecedorCidadeBairroUf();
+                this.mForCiBaUf = new ModelFornecedorCidadeUf();
                 //rs retorna todos os dados do banco de cada campo
                 //para mEstado que mostra na tabela
                 this.mForCiBaUf.setId(rs.getInt("f.for_id"));
@@ -57,9 +56,9 @@ public class ControllerFornecedorCidadeBairroUf {
                 this.mForCiBaUf.setEndereco(rs.getString("f.for_endereco"));
                 this.mForCiBaUf.setNum(rs.getString("f.for_num"));
                 this.mForCiBaUf.setComeplemento(rs.getString("f.for_complemento"));
-                this.mForCiBaUf.setBairro(rs.getString("b.bairro_nome"));
+                this.mForCiBaUf.setBairro(rs.getString("f.for_bairro"));
                 this.mForCiBaUf.setCidade(rs.getString("c.cid_nome"));
-                this.mForCiBaUf.setUf(rs.getString("e.estado_nome"));
+                this.mForCiBaUf.setUf(rs.getString("e.estado_uf"));
                 this.mForCiBaUf.setCep(rs.getString("f.for_cep"));
                 
 
@@ -67,7 +66,7 @@ public class ControllerFornecedorCidadeBairroUf {
 
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
+            JOptionPane.showMessageDialog(null,"tabela fornecedores:"+ e);
         }
         // retonar os dados para preencher a tabela
         return ListforCiBaUf;

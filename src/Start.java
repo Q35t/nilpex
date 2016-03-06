@@ -1,8 +1,7 @@
 
-
 import com.jtattoo.plaf.aluminium.AluminiumLookAndFeel;
 import com.jtattoo.plaf.smart.SmartLookAndFeel;
-import com.jtattoo.plaf.texture.TextureLookAndFeel;
+import de.javasoft.plaf.synthetica.SyntheticaStandardLookAndFeel;
 import java.util.Properties;
 import javax.swing.UIManager;
 import view.ViewPrincipal;
@@ -34,11 +33,15 @@ public class Start {
                         //TextureLookAndFeel.setCurrentTheme(props);
 			//UIManager.setLookAndFeel("com.jtattoo.plaf.texture.TextureLookAndFeel");
                         //UIManager.setLookAndFeel("de.javasoft.plaf.synthetica.SyntheticaLookAndFeel");
+                       AluminiumLookAndFeel.setCurrentTheme(props);
+                       UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
+                       //UIManager.setLookAndFeel(new SyntheticaStandardLookAndFeel());
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-        new ViewSplash().setVisible(true);
+	  new ViewSplash().setVisible(true);
+        } catch (Exception e) {
+	  e.printStackTrace();
+        }
+
         
     }
     

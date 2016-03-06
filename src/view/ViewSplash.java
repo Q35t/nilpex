@@ -17,9 +17,11 @@ public class ViewSplash extends javax.swing.JFrame {
      * Creates new form ViewSplash
      */
     public ViewSplash() {
+        setUndecorated(true);
         initComponents();
         setLocationRelativeTo(null);
         carregajanela();
+        
         
     }
     
@@ -79,7 +81,6 @@ public class ViewSplash extends javax.swing.JFrame {
         lbstatus = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
 
         lbstatus.setText("........");
 

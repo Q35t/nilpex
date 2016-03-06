@@ -45,19 +45,15 @@ public class ViewPrincipal extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem5 = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenu10 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem19 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenu8 = new javax.swing.JMenu();
         jMenuItem22 = new javax.swing.JMenuItem();
@@ -68,12 +64,10 @@ public class ViewPrincipal extends javax.swing.JFrame {
         jMenuItem27 = new javax.swing.JMenuItem();
         jMenu9 = new javax.swing.JMenu();
         jMenuItem26 = new javax.swing.JMenuItem();
-        jMenuItem21 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem20 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem14 = new javax.swing.JMenuItem();
-        jMenuItem29 = new javax.swing.JMenuItem();
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
         jMenuItem15 = new javax.swing.JMenuItem();
         jSeparator8 = new javax.swing.JPopupMenu.Separator();
@@ -161,6 +155,11 @@ public class ViewPrincipal extends javax.swing.JFrame {
         jMenu1.add(jMenuItem2);
 
         jMenuItem3.setText("Produtos");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem3);
 
         jMenuItem4.setText("Usuarios");
@@ -176,25 +175,14 @@ public class ViewPrincipal extends javax.swing.JFrame {
         jMenu1.add(jMenuItem5);
         jMenu1.add(jSeparator2);
 
-        jMenuItem6.setText("Bairros");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem6);
-
         jMenuBar1.add(jMenu1);
-
-        jMenu10.setText("Consulta");
-        jMenuBar1.add(jMenu10);
 
         jMenu2.setText("Venda");
 
         jMenuItem7.setText("Nova Venda");
         jMenu2.add(jMenuItem7);
 
-        jMenuItem8.setText("Orçamento");
+        jMenuItem8.setText("Venda PDV");
         jMenu2.add(jMenuItem8);
 
         jMenuBar1.add(jMenu2);
@@ -203,9 +191,6 @@ public class ViewPrincipal extends javax.swing.JFrame {
 
         jMenuItem9.setText("Fluxo do Caixa");
         jMenu3.add(jMenuItem9);
-
-        jMenuItem10.setText("Sangria");
-        jMenu3.add(jMenuItem10);
         jMenu3.add(jSeparator3);
 
         jMenuItem11.setText("Contas A Pagar");
@@ -214,9 +199,6 @@ public class ViewPrincipal extends javax.swing.JFrame {
         jMenuItem12.setText("Contas A Receber");
         jMenu3.add(jMenuItem12);
         jMenu3.add(jSeparator4);
-
-        jMenuItem19.setText("Fechar Caixa");
-        jMenu3.add(jMenuItem19);
 
         jMenuBar1.add(jMenu3);
 
@@ -254,9 +236,6 @@ public class ViewPrincipal extends javax.swing.JFrame {
         jMenuItem26.setText("Fluxo do Caixa");
         jMenu9.add(jMenuItem26);
 
-        jMenuItem21.setText("Sangrias");
-        jMenu9.add(jMenuItem21);
-
         jMenuItem13.setText("Contas A Pagar");
         jMenu9.add(jMenuItem13);
 
@@ -271,9 +250,6 @@ public class ViewPrincipal extends javax.swing.JFrame {
 
         jMenuItem14.setText("Troca Senha");
         jMenu5.add(jMenuItem14);
-
-        jMenuItem29.setText("Calculadora");
-        jMenu5.add(jMenuItem29);
         jMenu5.add(jSeparator7);
 
         jMenuItem15.setText("Ocorrencias OP");
@@ -325,11 +301,6 @@ public class ViewPrincipal extends javax.swing.JFrame {
         new ViewCadCliente().setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        // TODO add your handling code here:
-        new ViewCadBairro().setVisible(true);
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
-
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
         new ViewCadCidade().setVisible(true);
@@ -339,6 +310,11 @@ public class ViewPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         new ViewCadFornecedor().setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        new ViewCadProduto().setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -378,7 +354,6 @@ public class ViewPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -389,7 +364,6 @@ public class ViewPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
@@ -398,10 +372,8 @@ public class ViewPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem18;
-    private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem20;
-    private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem22;
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem24;
@@ -409,11 +381,9 @@ public class ViewPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem26;
     private javax.swing.JMenuItem jMenuItem27;
     private javax.swing.JMenuItem jMenuItem28;
-    private javax.swing.JMenuItem jMenuItem29;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
