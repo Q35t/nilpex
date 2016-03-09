@@ -33,9 +33,9 @@ public class ControllerClienteCidadeUf {
     
     public List select() {
         List<ModelClienteCidadeUf> ListCliCiBaUf = new ArrayList<ModelClienteCidadeUf>();
-        String sql = "SELECT cli.cli_id,cli.cli_nome,cli.cli_cpf,cli.cli_email,cli.cli_telefone,cli.cli_celular,\n" +
-                     "cli.cli_endereco,cli.cli_numcasa,cli.cli_complemento,cli.cli_bairro,cid.cid_nome,est.estado_uf, cli.cli_cep\n" +
-                     "FROM tab_cadcliente cli INNER JOIN tab_cadcidade cid ON cli.cli_idcidade = cid.cid_id INNER JOIN tab_estado est ON cli.cli_idestado = est.estado_id";
+        String sql = "SELECT cli.idclientes,cli.nome,cli.cpf,cli.email,cli.telefone,cli.celular,\n" +
+                     "cli.endereco,cli.numcasa,cli.complemento,cli.bairro,cid.nome,est.uf, cli.cep\n" +
+                     "FROM clientes cli INNER JOIN cidades cid ON cli.fkcidade = cid.idcidades INNER JOIN estados est ON cli.fkestado = est.idestados";
 
         try {
            
@@ -47,19 +47,19 @@ public class ControllerClienteCidadeUf {
                 this.mCliCiBaUf = new ModelClienteCidadeUf();
                 //rs retorna todos os dados do banco de cada campo
                 //para mEstado que mostra na tabela
-                this.mCliCiBaUf.setId(rs.getInt("cli.cli_id"));
-                this.mCliCiBaUf.setNome(rs.getString("cli.cli_nome"));
-                this.mCliCiBaUf.setCpf(rs.getString("cli.cli_cpf"));
-                this.mCliCiBaUf.setEmail(rs.getString("cli.cli_email"));
-                this.mCliCiBaUf.setTelefone(rs.getString("cli.cli_telefone"));
-                this.mCliCiBaUf.setCelular(rs.getString("cli.cli_celular"));
-                this.mCliCiBaUf.setEndereco(rs.getString("cli.cli_endereco"));
-                this.mCliCiBaUf.setNumcasa(rs.getString("cli.cli_numcasa"));
-                this.mCliCiBaUf.setComplemento(rs.getString("cli.cli_complemento"));
-                this.mCliCiBaUf.setBairro(rs.getString("cli.cli_bairro"));
-                this.mCliCiBaUf.setCidade(rs.getString("cid.cid_nome"));
-                this.mCliCiBaUf.setUf(rs.getString("est.estado_uf"));
-                this.mCliCiBaUf.setCep(rs.getString("cli.cli_cep"));
+                this.mCliCiBaUf.setId(rs.getInt("cli.idclientes"));
+                this.mCliCiBaUf.setNome(rs.getString("cli.nome"));
+                this.mCliCiBaUf.setCpf(rs.getString("cli.cpf"));
+                this.mCliCiBaUf.setEmail(rs.getString("cli.email"));
+                this.mCliCiBaUf.setTelefone(rs.getString("cli.telefone"));
+                this.mCliCiBaUf.setCelular(rs.getString("cli.celular"));
+                this.mCliCiBaUf.setEndereco(rs.getString("cli.endereco"));
+                this.mCliCiBaUf.setNumcasa(rs.getString("cli.numcasa"));
+                this.mCliCiBaUf.setComplemento(rs.getString("cli.complemento"));
+                this.mCliCiBaUf.setBairro(rs.getString("cli.bairro"));
+                this.mCliCiBaUf.setCidade(rs.getString("cid.nome"));
+                this.mCliCiBaUf.setUf(rs.getString("est.uf"));
+                this.mCliCiBaUf.setCep(rs.getString("cli.cep"));
                 
 
                 ListCliCiBaUf.add(this.mCliCiBaUf);

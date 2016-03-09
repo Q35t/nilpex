@@ -28,8 +28,8 @@ public class ControllerProdutoFornecedor {
     
     public Object select(){
       List<ModeloProdutoFornecedor> ListProFor = new ArrayList<ModeloProdutoFornecedor>(); 
-      String sql = "select p.pro_id, p.pro_nome, p.pro_valor, p.pro_quant,f.for_nome\n" +
-      "FROM tab_cadproduto p INNER JOIN tab_cadfornecedor f ON p.pro_idfornecedor = f.for_id";
+      String sql = "select p.idprodutos, p.nome, p.valor, p.quant,f.nome\n" +
+      "FROM produtos p INNER JOIN fornecedores f ON p.fkfornecedor = f.idfornecedores";
       
       try{
             PreparedStatement ps = this.con.prepareStatement(sql);
@@ -38,19 +38,19 @@ public class ControllerProdutoFornecedor {
             while (rs.next()) {
                 ModeloProdutoFornecedor mProFor = new ModeloProdutoFornecedor();
                 
-                mProFor.setPro_id(rs.getInt("p.pro_id"));
-                mProFor.setPro_nome(rs.getString("p.pro_nome"));
-                mProFor.setPro_valor(rs.getDouble("p.pro_valor"));
-                mProFor.setPro_quant(rs.getInt("p.pro_quant"));
-                mProFor.setPro_fornecedor("f.for_nome");
+                mProFor.setPro_id(rs.getInt("p.idprodutos"));
+                mProFor.setPro_nome(rs.getString("p.nome"));
+                mProFor.setPro_valor(rs.getDouble("p.valor"));
+                mProFor.setPro_quant(rs.getInt("p.quant"));
+                mProFor.setPro_fornecedor(rs.getString("f.nome"));
                 
                 ListProFor.add(mProFor);
             }
           
-      }
-      catch(SQLException e){
+        }
+        catch(SQLException e){
           
-      }
+        }
       
         
         return ListProFor;

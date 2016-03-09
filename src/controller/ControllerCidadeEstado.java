@@ -28,8 +28,8 @@ public class ControllerCidadeEstado {
     
      public List select() {
         List<ModelCidadeEstado> ListCidadeEstado = new ArrayList<ModelCidadeEstado>();
-        String sql = "SELECT tab_cadcidade.cid_id , tab_cadcidade.cid_nome, tab_estado.estado_uf, tab_estado.estado_nome "
-                + "FROM tab_cadcidade inner join tab_estado on tab_estado.estado_id = tab_cadcidade.cid_idestado;";
+        String sql = "SELECT cidades.idcidades , cidades.nome, estados.uf, estados.nome "
+                + "FROM cidades inner join estados on estados.idestados = cidades.fkestado";
         
         PreparedStatement ps;
 
@@ -44,10 +44,10 @@ public class ControllerCidadeEstado {
                 ModelCidadeEstado mCidadeEstado = new ModelCidadeEstado();
                 //rs retorna todos os dados do banco de cada campo
                 //para mcc que mostra na tabela
-                mCidadeEstado.setCid_id(rs.getInt("cid_id"));
-                mCidadeEstado.setCid_nome(rs.getString("cid_nome"));
-                mCidadeEstado.setEstado_uf(rs.getString("estado_uf"));
-                mCidadeEstado.setEstado_nome(rs.getString("estado_nome"));
+                mCidadeEstado.setCid_id(rs.getInt("idcidades"));
+                mCidadeEstado.setCid_nome(rs.getString("nome"));//nome cidade
+                mCidadeEstado.setEstado_uf(rs.getString("uf"));
+                mCidadeEstado.setEstado_nome(rs.getString("estados.nome"));//nome estado
 
                 ListCidadeEstado.add(mCidadeEstado);
 

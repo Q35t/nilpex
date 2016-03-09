@@ -313,11 +313,11 @@ public class ViewCadCidade extends javax.swing.JFrame {
 	//codicao
             if(funcao.equals("salvar")){
 		this.mCadCidade.setCid_nome(txtcidade.getText());
-		this.mCadCidade.setCid_idestado(cbuf.getSelectedIndex()+1);
+		this.mCadCidade.setCid_idestado(cEstado.select(cbuf.getSelectedItem().toString()));
 		}
             else{	
 		this.mCadCidade.setCid_nome(txtcidade.getText());
-                this.mCadCidade.setCid_idestado((cbuf.getSelectedIndex()+1));
+                this.mCadCidade.setCid_idestado(cEstado.select(cbuf.getSelectedItem().toString()));
                 System.out.println(cbuf.getSelectedIndex());
                     //se ele não for nulo e nao estiver vazio
                     if (this.txtcodigo.getText() != null && !this.txtcodigo.getText().equals("")) {

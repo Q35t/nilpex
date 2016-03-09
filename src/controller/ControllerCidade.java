@@ -28,7 +28,7 @@ public class ControllerCidade implements InterfaceCrud{
     @Override
     public void insert(Object o) {
        this.mCadCidade = (ModelCidade) o;
-       String sql = "INSERT INTO tab_cadcidade (cid_nome,cid_idestado) VALUES (?,?)";
+       String sql = "INSERT INTO cidades (nome,fkestado) VALUES (?,?)";
        try{
            PreparedStatement ps = this.con.prepareStatement(sql);
            System.out.println(this.mCadCidade.getCid_nome());
@@ -46,7 +46,7 @@ public class ControllerCidade implements InterfaceCrud{
     @Override
     public void update(Object o) {
         this.mCadCidade = (ModelCidade) o;
-        String sql = "update tab_cadcidade set cid_nome = ?, cid_idestado= ? where cid_id = ? ";
+        String sql = "update cidades set nome = ?, fkestado= ? where idcidades = ? ";
         try{
             PreparedStatement ps = this.con.prepareStatement(sql);
             ps.setString(1, this.mCadCidade.getCid_nome());
@@ -67,7 +67,7 @@ public class ControllerCidade implements InterfaceCrud{
     @Override
     public void delete(Object o) {
         this.mCadCidade = (ModelCidade) o;
-        String sql = "delete from tab_cadcidade where cid_id = ?";
+        String sql = "delete from cidades where idcidades = ?";
         
         try{
             PreparedStatement ps = this.con.prepareStatement(sql);
@@ -86,7 +86,7 @@ public class ControllerCidade implements InterfaceCrud{
         //estancia do modelo de cadastro de cidade
         this.mCadCidade = new ModelCidade();
         //scrip sql
-        String sql = "select * from tab_cadcidade where = ? ";
+        String sql = "select * from cidades where idcidades = ? ";
         PreparedStatement ps;
 
         try {
@@ -101,9 +101,9 @@ public class ControllerCidade implements InterfaceCrud{
             while (rs.next()) {
                 // modelo de cadastro cidade recebe as informações 
                 // do banco de dados para preencher JComboBox
-                this.mCadCidade.setCid_id(rs.getInt("cid_id"));
-                this.mCadCidade.setCid_nome(rs.getString("cid_nome"));
-                this.mCadCidade.setCid_idestado(rs.getInt("cid_idestado"));
+                this.mCadCidade.setCid_id(rs.getInt("idcidades"));
+                this.mCadCidade.setCid_nome(rs.getString("nome"));
+                this.mCadCidade.setCid_idestado(rs.getInt("fkestado"));
             }
         } catch (SQLException e) {
 
@@ -111,11 +111,41 @@ public class ControllerCidade implements InterfaceCrud{
         
         return this.mCadCidade;
     }
+    public int select(String nome) {
+        //estancia do modelo de cadastro de cidade
+        this.mCadCidade = new ModelCidade();
+        //scrip sql
+        String sql = "select * from cidades where nome = ? ";
+        PreparedStatement ps;
+        int codigo = 0;
+        try {
+            //ps recebe o scrip sql
+            ps = this.con.prepareStatement(sql);
+            //ps recebe o codigo da cidade passado por parametro em 'i'
+            ps.setString(1, nome);
+            //rs recebe o resultado da consulta atraves do executeQuery
+            ResultSet rs = ps.executeQuery();
+            //e enquanto o rs retorna dados verdadeiros TRUE
+            //avança para o próximo
+            while (rs.next()) {
+                // modelo de cadastro cidade recebe as informações 
+                // do banco de dados para preencher JComboBox
+                codigo = rs.getInt("idcidades");
+                //this.mCadCidade.setCid_id(rs.getInt("cid_id"));
+                //this.mCadCidade.setCid_nome(rs.getString("cid_nome"));
+                //this.mCadCidade.setCid_idestado(rs.getInt("cid_idestado"));
+            }
+        } catch (SQLException e) {
 
+        }
+        
+        return codigo;
+    }
+        
     @Override
     public List select() {
         List<ModelCidade> ListCadCidade = new ArrayList<ModelCidade>();
-        String sql = "select * from tab_cadcidade";
+        String sql = "select * from cidades";
         PreparedStatement ps;
 
         try {
@@ -129,9 +159,9 @@ public class ControllerCidade implements InterfaceCrud{
                 this.mCadCidade = new ModelCidade();
                 //rs retorna todos os dados do banco de cada campo
                 //para mCadCidade que mostra na tabela ViewCadCidade
-                this.mCadCidade.setCid_id(rs.getInt("cid_id"));
-                this.mCadCidade.setCid_nome(rs.getString("cid_nome"));
-                this.mCadCidade.setCid_idestado(rs.getInt("cid_idestado"));
+                this.mCadCidade.setCid_id(rs.getInt("idcidades"));
+                this.mCadCidade.setCid_nome(rs.getString("nome"));
+                this.mCadCidade.setCid_idestado(rs.getInt("fkestado"));
 
                 ListCadCidade.add(this.mCadCidade);
 

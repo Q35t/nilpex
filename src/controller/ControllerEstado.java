@@ -32,7 +32,7 @@ public class ControllerEstado implements InterfaceCrud{
     @Override
     public void insert(Object o) {
         this.mEstado = (ModelEstado) o;
-        String sql = "insert into tab_estado (estado_uf, estado_nome) values (?,?)";
+        String sql = "insert into estados (uf,nome) values (?,?)";
         try{
             PreparedStatement ps = this.con.prepareStatement(sql);
             ps.setString(1, this.mEstado.getEstado_uf());
@@ -48,7 +48,7 @@ public class ControllerEstado implements InterfaceCrud{
     @Override
     public void update(Object o) {
         this.mEstado = (ModelEstado) o;
-        String sql = "update tab_estado set estado_uf = ?, estado_nome = ? where estado_id = ? ";
+        String sql = "update estados set uf = ?, nome = ? where idestados = ? ";
         try{
             PreparedStatement ps = this.con.prepareStatement(sql);
             ps.setString(1, this.mEstado.getEstado_uf());
@@ -69,7 +69,7 @@ public class ControllerEstado implements InterfaceCrud{
     @Override
     public void delete(Object o) {
         this.mEstado = (ModelEstado) o;
-        String sql = "delete from tab_estado where estado_id = ?";
+        String sql = "delete from estados where idestados = ?";
         
         try{
             PreparedStatement ps = this.con.prepareStatement(sql);
@@ -88,7 +88,7 @@ public class ControllerEstado implements InterfaceCrud{
         //estancia do modelo de estado
         this.mEstado = new ModelEstado();
         //scrip sql
-        String sql = "select * from tab_estado where = ? ";
+        String sql = "select * from estados where idestados = ? ";
         PreparedStatement ps;
 
         try {
@@ -103,9 +103,9 @@ public class ControllerEstado implements InterfaceCrud{
             while (rs.next()) {
                 // modelo de estado recebe as informações 
                 // do banco de dados para preencher JComboBox
-                this.mEstado.setEstado_id(rs.getInt("estado_id"));
-                this.mEstado.setEstado_uf(rs.getString("estado_uf"));
-                this.mEstado.setEstado_nome(rs.getString("estado_nome"));
+                this.mEstado.setEstado_id(rs.getInt("idestados"));
+                this.mEstado.setEstado_uf(rs.getString("uf"));
+                this.mEstado.setEstado_nome(rs.getString("nome"));
             }
         } catch (SQLException e) {
 
@@ -113,11 +113,42 @@ public class ControllerEstado implements InterfaceCrud{
         
         return this.mEstado;
     }
+    
+    public int select(String nome) {
+        //estancia do modelo de estado
+        this.mEstado = new ModelEstado();
+        //scrip sql
+        String sql = "select * from estados where uf = ? ";
+        PreparedStatement ps;
+        int codigo = 0;
+        try {
+            //ps recebe o scrip sql
+            ps = this.con.prepareStatement(sql);
+            //ps recebe o codigo dos estado passado por parametro em 'i'
+            ps.setString(1, nome);
+            //rs recebe o resultado da consulta atraves do executeQuery
+            ResultSet rs = ps.executeQuery();
+            //e enquanto o rs retorna dados verdadeiros TRUE
+            //avança para o próximo
+            while (rs.next()) {
+                // modelo de estado recebe as informações 
+                // do banco de dados para preencher JComboBox
+                codigo = rs.getInt("idestados");
+                //this.mEstado.setEstado_id(rs.getInt("estado_id"));
+                //this.mEstado.setEstado_uf(rs.getString("estado_uf"));
+                //this.mEstado.setEstado_nome(rs.getString("estado_nome"));
+            }
+        } catch (SQLException e) {
+
+        }
+        
+        return codigo;
+    }
 
     @Override
     public List select() {
         List <ModelEstado> ListEstado = new ArrayList<ModelEstado>();
-        String sql = "select * from tab_estado";
+        String sql = "select * from estados";
         PreparedStatement ps;
 
         try {
@@ -131,9 +162,9 @@ public class ControllerEstado implements InterfaceCrud{
                 this.mEstado = new ModelEstado();
                 //rs retorna todos os dados do banco de cada campo
                 //para mEstado que mostra na tabela
-                this.mEstado.setEstado_id(rs.getInt("estado_id"));
-                this.mEstado.setEstado_uf(rs.getString("estado_uf"));
-                this.mEstado.setEstado_nome(rs.getString("estado_nome"));
+                this.mEstado.setEstado_id(rs.getInt("idestados"));
+                this.mEstado.setEstado_uf(rs.getString("uf"));
+                this.mEstado.setEstado_nome(rs.getString("nome"));
 
                 ListEstado.add(this.mEstado);
 

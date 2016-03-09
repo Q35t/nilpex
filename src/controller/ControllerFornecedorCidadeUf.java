@@ -32,10 +32,10 @@ public class ControllerFornecedorCidadeUf {
     
     public List select() {
         List<ModelFornecedorCidadeUf> ListforCiBaUf = new ArrayList<ModelFornecedorCidadeUf>();
-        String sql = "SELECT f.for_id,f.for_nome,f.for_cnpj_cpf,f.for_email,f.for_telefone,f.for_telcomercial,\n" +
-                     "f.for_endereco,f.for_num,f.for_complemento,f.for_bairro,c.cid_nome,e.estado_uf,f.for_cep\n" +
-                     "FROM tab_cadfornecedor f INNER JOIN tab_cadcidade c ON f.for_idcidade = c.cid_id\n" +
-                     "INNER JOIN tab_estado e ON f.for_idestado = e.estado_id; ";
+        String sql = "SELECT f.idfornecedores,f.nome,f.cnpj_cpf,f.email,f.telefone,f.telcomercial,\n" +
+                     "f.endereco,f.num,f.complemento,f.bairro,c.nome,e.uf,f.cep\n" +
+                     "FROM fornecedores f INNER JOIN cidades c ON f.fkcidade = c.idcidades\n" +
+                     "INNER JOIN estados e ON f.fkestado = e.idestados";
         
          try {
            
@@ -47,19 +47,19 @@ public class ControllerFornecedorCidadeUf {
                 this.mForCiBaUf = new ModelFornecedorCidadeUf();
                 //rs retorna todos os dados do banco de cada campo
                 //para mEstado que mostra na tabela
-                this.mForCiBaUf.setId(rs.getInt("f.for_id"));
-                this.mForCiBaUf.setNome(rs.getString("f.for_nome"));
-                this.mForCiBaUf.setCnpj_cpf(rs.getString("f.for_cnpj_cpf"));
-                this.mForCiBaUf.setEmail(rs.getString("f.for_email"));
-                this.mForCiBaUf.setTelefone(rs.getString("f.for_telefone"));
-                this.mForCiBaUf.setTelcomercial(rs.getString("f.for_telcomercial"));
-                this.mForCiBaUf.setEndereco(rs.getString("f.for_endereco"));
-                this.mForCiBaUf.setNum(rs.getString("f.for_num"));
-                this.mForCiBaUf.setComeplemento(rs.getString("f.for_complemento"));
-                this.mForCiBaUf.setBairro(rs.getString("f.for_bairro"));
-                this.mForCiBaUf.setCidade(rs.getString("c.cid_nome"));
-                this.mForCiBaUf.setUf(rs.getString("e.estado_uf"));
-                this.mForCiBaUf.setCep(rs.getString("f.for_cep"));
+                this.mForCiBaUf.setId(rs.getInt("f.idfornecedores"));
+                this.mForCiBaUf.setNome(rs.getString("f.nome"));
+                this.mForCiBaUf.setCnpj_cpf(rs.getString("f.cnpj_cpf"));
+                this.mForCiBaUf.setEmail(rs.getString("f.email"));
+                this.mForCiBaUf.setTelefone(rs.getString("f.telefone"));
+                this.mForCiBaUf.setTelcomercial(rs.getString("f.telcomercial"));
+                this.mForCiBaUf.setEndereco(rs.getString("f.endereco"));
+                this.mForCiBaUf.setNum(rs.getString("f.num"));
+                this.mForCiBaUf.setComeplemento(rs.getString("f.complemento"));
+                this.mForCiBaUf.setBairro(rs.getString("f.bairro"));
+                this.mForCiBaUf.setCidade(rs.getString("c.nome"));
+                this.mForCiBaUf.setUf(rs.getString("e.uf"));
+                this.mForCiBaUf.setCep(rs.getString("f.cep"));
                 
 
                 ListforCiBaUf.add(this.mForCiBaUf);

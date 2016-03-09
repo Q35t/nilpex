@@ -81,17 +81,16 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
         txtnome = new javax.swing.JTextField();
         txtcpf = new javax.swing.JTextField();
         lbcpf = new javax.swing.JLabel();
-        txtcelular = new javax.swing.JTextField();
         lbcelular = new javax.swing.JLabel();
-        txttelefone = new javax.swing.JTextField();
         lbtelefone = new javax.swing.JLabel();
         txtemail = new javax.swing.JTextField();
         lbemail = new javax.swing.JLabel();
+        txttelefone = new javax.swing.JFormattedTextField();
+        txtcelular = new javax.swing.JFormattedTextField();
         jPanel5 = new javax.swing.JPanel();
         lbendereco = new javax.swing.JLabel();
         txtnumcasa = new javax.swing.JTextField();
         lbuf = new javax.swing.JLabel();
-        txtcep = new javax.swing.JTextField();
         cbuf = new javax.swing.JComboBox<>();
         lbcomplemento = new javax.swing.JLabel();
         txtendereco = new javax.swing.JTextField();
@@ -102,6 +101,7 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
         lbcidade = new javax.swing.JLabel();
         lbbairro = new javax.swing.JLabel();
         txtbairro = new javax.swing.JTextField();
+        txtcep = new javax.swing.JFormattedTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jEditorPane1 = new javax.swing.JEditorPane();
         jLabel1 = new javax.swing.JLabel();
@@ -140,8 +140,8 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
                     .addComponent(jTextField11)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lbpesquisa)
-                        .addGap(0, 589, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE))
+                        .addGap(0, 610, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -152,7 +152,7 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -172,6 +172,18 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
 
         lbemail.setText("E-mail:");
 
+        try {
+            txttelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            txtcelular.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -185,28 +197,31 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
                             .addComponent(lbemail))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbtelefone)
-                            .addComponent(txttelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(lbtelefone)
+                                .addGap(96, 96, 96))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addComponent(txttelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(lbcelular)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(txtcelular)))
+                                .addGap(0, 92, Short.MAX_VALUE))
+                            .addComponent(txtcelular, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbcodigo))
+                            .addComponent(lbcodigo)
+                            .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbnome)
-                            .addComponent(txtnome, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtnome, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtcpf)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(lbcpf)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(txtcpf))))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -232,7 +247,7 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
                     .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txttelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtcelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Localidade"));
@@ -250,6 +265,12 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
         lbcidade.setText("Cidade:");
 
         lbbairro.setText("Bairro:");
+
+        try {
+            txtcep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -284,10 +305,12 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbbairro)
                             .addComponent(txtbairro, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(15, 15, 15)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbcep)
-                            .addComponent(txtcep, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(lbcep)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtcep))))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -312,8 +335,8 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbcidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbuf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtcep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtbairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtbairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtcep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 17, Short.MAX_VALUE))
         );
 
@@ -341,7 +364,7 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(22, 22, 22)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
@@ -404,7 +427,7 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
                 .addComponent(btEditar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btNovo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 248, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 269, Short.MAX_VALUE)
                 .addComponent(btSalvar)
                 .addContainerGap())
         );
@@ -593,8 +616,8 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
 		this.mCadFornecedor.setFor_num(txtnumcasa.getText());
 		this.mCadFornecedor.setFor_complemento(txtcomplemento.getText());
 		this.mCadFornecedor.setFor_bairro(txtbairro.getText());
-		this.mCadFornecedor.setFor_idcidade(cbcidade.getSelectedIndex()+1);
-		this.mCadFornecedor.setFor_idestado(cbuf.getSelectedIndex()+1);
+		this.mCadFornecedor.setFor_idcidade(cCidade.select(cbcidade.getSelectedItem().toString()));
+		this.mCadFornecedor.setFor_idestado(cEstado.select(cbuf.getSelectedItem().toString()));
 		this.mCadFornecedor.setFor_cep(txtcep.getText());
 		}
             else{	
@@ -607,8 +630,8 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
 		this.mCadFornecedor.setFor_num(txtnumcasa.getText());
 		this.mCadFornecedor.setFor_complemento(txtcomplemento.getText());
 		this.mCadFornecedor.setFor_bairro(txtbairro.getText());
-		this.mCadFornecedor.setFor_idcidade(cbcidade.getSelectedIndex()+1);
-		this.mCadFornecedor.setFor_idestado(cbuf.getSelectedIndex()+1);
+		this.mCadFornecedor.setFor_idcidade(cCidade.select(cbcidade.getSelectedItem().toString()));
+		this.mCadFornecedor.setFor_idestado(cEstado.select(cbuf.getSelectedItem().toString()));
 		this.mCadFornecedor.setFor_cep(txtcep.getText());
                     if (this.txtcodigo.getText() != null && !this.txtcodigo.getText().equals("")) {
 			this.mCadFornecedor.setFor_id(Integer.parseInt(this.txtcodigo.getText()));
@@ -770,8 +793,8 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
     private javax.swing.JLabel lbuf;
     private javax.swing.JTable table;
     private javax.swing.JTextField txtbairro;
-    private javax.swing.JTextField txtcelular;
-    private javax.swing.JTextField txtcep;
+    private javax.swing.JFormattedTextField txtcelular;
+    private javax.swing.JFormattedTextField txtcep;
     private javax.swing.JTextField txtcodigo;
     private javax.swing.JTextField txtcomplemento;
     private javax.swing.JTextField txtcpf;
@@ -779,6 +802,6 @@ public class ViewCadFornecedor extends javax.swing.JFrame {
     private javax.swing.JTextField txtendereco;
     private javax.swing.JTextField txtnome;
     private javax.swing.JTextField txtnumcasa;
-    private javax.swing.JTextField txttelefone;
+    private javax.swing.JFormattedTextField txttelefone;
     // End of variables declaration//GEN-END:variables
 }

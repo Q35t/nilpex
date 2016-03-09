@@ -38,7 +38,7 @@ public class ControllerCliente implements InterfaceCrud {
         //forçando sua conversao
         ModelCliente mCadCliente = (ModelCliente) o;
         //variavel sql recebe script de insercao de dados sql
-        String sql = "INSERT INTO  tab_cadcliente (cli_nome,cli_cpf,cli_email,cli_endereco,cli_numcasa,cli_complemento,cli_bairro,cli_idcidade,cli_idestado,cli_cep,cli_telefone,cli_celular)"
+        String sql = "INSERT INTO  clientes (nome,cpf,email,endereco,numcasa,complemento,bairro,fkcidade,fkestado,cep,telefone,celular)"
                 + " values(?,?,?,?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement ps = this.con.prepareStatement(sql);
@@ -72,8 +72,8 @@ public class ControllerCliente implements InterfaceCrud {
         //forçando sua conversao
         ModelCliente mCadCliente = (ModelCliente) o;
         //variavel sql recebe script de insercao de dados sql
-        String sql = "UPDATE tab_cadcliente set cli_nome = ?, cli_cpf = ?, cli_email = ?,cli_endereco = ?,cli_numcasa = ?, cli_complemento = ?,cli_bairro = ?,cli_idcidade = ?,cli_idestado = ?,cli_cep = ?,cli_telefone = ?,cli_celular = ?"
-                + " where cli_id = ? ";
+        String sql = "UPDATE clientes set nome = ?, cpf = ?, email = ?,endereco = ?,numcasa = ?, complemento = ?,bairro = ?,fkcidade = ?,fkestado = ?,cep = ?,telefone = ?,celular = ?"
+                + " where idclientes = ? ";
         try {
             PreparedStatement ps = this.con.prepareStatement(sql);
             ps.setString(1, mCadCliente.getCli_nome());
@@ -104,7 +104,7 @@ public class ControllerCliente implements InterfaceCrud {
         //forçando sua conversao
         ModelCliente mCadCliente = (ModelCliente) o;
         //variavel sql recebe script de insercao de dados sql
-        String sql = "delete from tab_cadcliente where cli_id = ?";
+        String sql = "delete from clientes where idclientes = ?";
 
         try {
             //ps recebe o scrip sql para deleta o usuario que tiver o codigo
@@ -125,7 +125,7 @@ public class ControllerCliente implements InterfaceCrud {
         //estacia do modelo de cadastro de cliente
         ModelCliente mCadCliente = new ModelCliente();
         //scrip sql
-        String sql = "select * from tab_cadCli where = ? ";
+        String sql = "select * from clintes where idclientes = ? ";
         PreparedStatement ps;
 
         try {
@@ -140,18 +140,18 @@ public class ControllerCliente implements InterfaceCrud {
             while (rs.next()) {
                 // modelo de cadastro cliente recebe as informações 
                 // do banco de dados para preencher JComboBox
-                mCadCliente.setCli_nome(rs.getString("cli_nome"));
-                mCadCliente.setCli_cpf(rs.getString("cli_cpf"));
-                mCadCliente.setCli_email(rs.getString("cli_email"));
-                mCadCliente.setCli_endereco(rs.getString("cli_endereco"));
-                mCadCliente.setCli_numcasa(rs.getString("cli_numcasa"));
-                mCadCliente.setCli_complemento(rs.getString("cli_complemento"));
-                mCadCliente.setCli_bairro(rs.getString("cli_bairro"));
-                mCadCliente.setCli_idcidade(rs.getInt("cli_idCidade"));
-                mCadCliente.setCli_idestado(rs.getInt("cli_idestado"));
-                mCadCliente.setCli_cep(rs.getString("cli_cep"));
-                mCadCliente.setCli_telefone(rs.getString("cli_telefone"));
-                mCadCliente.setCli_celular(rs.getString("cli_celular"));
+                mCadCliente.setCli_nome(rs.getString("nome"));
+                mCadCliente.setCli_cpf(rs.getString("cpf"));
+                mCadCliente.setCli_email(rs.getString("email"));
+                mCadCliente.setCli_endereco(rs.getString("endereco"));
+                mCadCliente.setCli_numcasa(rs.getString("numcasa"));
+                mCadCliente.setCli_complemento(rs.getString("complemento"));
+                mCadCliente.setCli_bairro(rs.getString("bairro"));
+                mCadCliente.setCli_idcidade(rs.getInt("fkCidade"));
+                mCadCliente.setCli_idestado(rs.getInt("fkestado"));
+                mCadCliente.setCli_cep(rs.getString("cep"));
+                mCadCliente.setCli_telefone(rs.getString("telefone"));
+                mCadCliente.setCli_celular(rs.getString("celular"));
             }
         } catch (SQLException e) {
 
@@ -164,7 +164,7 @@ public class ControllerCliente implements InterfaceCrud {
         //estacia do modelo de cadastro de cliente
         ModelCliente mCadCliente = new ModelCliente();
         //scrip sql
-        String sql = "select * from tab_cadcliente where cli_nome = ? ";
+        String sql = "select * from clientes where nome = ? ";
         PreparedStatement ps;
 
         try {
@@ -179,18 +179,18 @@ public class ControllerCliente implements InterfaceCrud {
             while (rs.next()) {
                 // modelo de cadastro cliente recebe as informações 
                 // do banco de dados para preencher JComboBox
-                mCadCliente.setCli_nome(rs.getString("cli_nome"));
-                mCadCliente.setCli_cpf(rs.getString("cli_cpf"));
-                mCadCliente.setCli_email(rs.getString("cli_email"));
-                mCadCliente.setCli_endereco(rs.getString("cli_endereco"));
-                mCadCliente.setCli_numcasa(rs.getString("cli_numcasa"));
-                mCadCliente.setCli_complemento(rs.getString("cli_complemento"));
-                mCadCliente.setCli_bairro(rs.getString("cli_bairro"));
-                mCadCliente.setCli_idcidade(rs.getInt("cli_idCidade"));
-                mCadCliente.setCli_idestado(rs.getInt("cli_idestado"));
-                mCadCliente.setCli_cep(rs.getString("cli_cep"));
-                mCadCliente.setCli_telefone(rs.getString("cli_telefone"));
-                mCadCliente.setCli_celular(rs.getString("cli_celular"));
+                mCadCliente.setCli_nome(rs.getString("nome"));
+                mCadCliente.setCli_cpf(rs.getString("cpf"));
+                mCadCliente.setCli_email(rs.getString("email"));
+                mCadCliente.setCli_endereco(rs.getString("endereco"));
+                mCadCliente.setCli_numcasa(rs.getString("numcasa"));
+                mCadCliente.setCli_complemento(rs.getString("complemento"));
+                mCadCliente.setCli_bairro(rs.getString("bairro"));
+                mCadCliente.setCli_idcidade(rs.getInt("fkCidade"));
+                mCadCliente.setCli_idestado(rs.getInt("fkestado"));
+                mCadCliente.setCli_cep(rs.getString("cep"));
+                mCadCliente.setCli_telefone(rs.getString("telefone"));
+                mCadCliente.setCli_celular(rs.getString("celular"));
             }
         } catch (SQLException e) {
 
@@ -203,7 +203,7 @@ public class ControllerCliente implements InterfaceCrud {
     @Override
     public List select() {
         List<ModelCliente> ListCadCliente = new ArrayList<ModelCliente>();
-        String sql = "select * from tab_cadcliente";
+        String sql = "select * from clientes";
         PreparedStatement ps;
 
         try {
@@ -217,19 +217,19 @@ public class ControllerCliente implements InterfaceCrud {
                 ModelCliente mCadCliente = new ModelCliente();
                 //rs retorna todos os dados do banco de cada campo
                 //para mcc que mostra na tabela ViewCadCliente 
-                mCadCliente.setCli_id(rs.getInt("cli_id"));
-                mCadCliente.setCli_nome(rs.getString("cli_nome"));
-                mCadCliente.setCli_cpf(rs.getString("cli_cpf"));
-                mCadCliente.setCli_email(rs.getString("cli_email"));
-                mCadCliente.setCli_endereco(rs.getString("cli_endereco"));
-                mCadCliente.setCli_numcasa(rs.getString("cli_numcasa"));
-                mCadCliente.setCli_complemento(rs.getString("cli_complemento"));
-                mCadCliente.setCli_bairro(rs.getString("cli_bairro"));
-                mCadCliente.setCli_idcidade(rs.getInt("cli_idCidade"));
-                mCadCliente.setCli_idestado(rs.getInt("cli_idestado"));
-                mCadCliente.setCli_cep(rs.getString("cli_cep"));
-                mCadCliente.setCli_telefone(rs.getString("cli_telefone"));
-                mCadCliente.setCli_celular(rs.getString("cli_celular"));
+                mCadCliente.setCli_id(rs.getInt("idclientes"));
+                mCadCliente.setCli_nome(rs.getString("nome"));
+                mCadCliente.setCli_cpf(rs.getString("cpf"));
+                mCadCliente.setCli_email(rs.getString("email"));
+                mCadCliente.setCli_endereco(rs.getString("endereco"));
+                mCadCliente.setCli_numcasa(rs.getString("numcasa"));
+                mCadCliente.setCli_complemento(rs.getString("complemento"));
+                mCadCliente.setCli_bairro(rs.getString("bairro"));
+                mCadCliente.setCli_idcidade(rs.getInt("fkCidade"));
+                mCadCliente.setCli_idestado(rs.getInt("fkestado"));
+                mCadCliente.setCli_cep(rs.getString("cep"));
+                mCadCliente.setCli_telefone(rs.getString("telefone"));
+                mCadCliente.setCli_celular(rs.getString("celular"));
 
                 ListCadCliente.add(mCadCliente);
 

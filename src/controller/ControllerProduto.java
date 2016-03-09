@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import model.ModelProduto;
+import model.ModeloProdutoFornecedor;
 import util.InterfaceCrud;
 
 /**
@@ -33,7 +34,7 @@ public class ControllerProduto implements InterfaceCrud {
     @Override
     public void insert(Object o) {
         this.mPro = (ModelProduto) o;
-        String sql = "insert into tab_cadproduto (pro_nome,pro_valor,pro_quant,pro_foto,pro_idfornecedor) values (?,?,?,?,?)";
+        String sql = "insert into produtos (nome,valor,quant,foto,fkfornecedor) values (?,?,?,?,?)";
         
         try{
             PreparedStatement ps = this.con.prepareStatement(sql);
@@ -53,7 +54,7 @@ public class ControllerProduto implements InterfaceCrud {
     @Override
     public void update(Object o) {
         this.mPro = (ModelProduto) o;
-        String sql = "update tab_cadproduto set pro_nome = ?,pro_valor = ?,pro_quant = ?,pro_foto = ?,pro_idfornecedor=? where pro_id=?";
+        String sql = "update produtos set nome = ?,valor = ?,quant = ?,foto = ?,fkfornecedor = ? where idprodutos=?";
         
         try{
             PreparedStatement ps = this.con.prepareStatement(sql);
@@ -74,7 +75,7 @@ public class ControllerProduto implements InterfaceCrud {
     @Override
     public void delete(Object o) {
         this.mPro = (ModelProduto) o;
-        String sql = "delete from tab_cadproduto where pro_id = ?"; 
+        String sql = "delete from produtos where idprodutos = ?"; 
         
         try{
             PreparedStatement ps = this.con.prepareStatement(sql);
@@ -90,7 +91,7 @@ public class ControllerProduto implements InterfaceCrud {
     @Override
     public Object select(int i) {
         this.mPro = new ModelProduto();
-        String sql = "select * from tab_cadproduto where pro_id = ?"; 
+        String sql = "select * from produtos where idprodutos = ?"; 
         
         PreparedStatement ps;
 
@@ -100,12 +101,35 @@ public class ControllerProduto implements InterfaceCrud {
             ps.setInt(1, i);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                this.mPro.setPro_id(rs.getInt("pro_id"));
-                this.mPro.setPro_nome(rs.getString("pro_nome"));
-                this.mPro.setPro_valor(rs.getDouble("pro_valor"));
-                this.mPro.setPro_estoq(rs.getInt("pro_quant"));
-                this.mPro.setPro_imagen(rs.getBytes("pro_foto"));
-                this.mPro.setPro_idfornecedor(rs.getInt("pro_idfornecedor"));
+                this.mPro.setPro_id(rs.getInt("idprodutos"));
+                this.mPro.setPro_nome(rs.getString("nome"));
+                this.mPro.setPro_valor(rs.getDouble("valor"));
+                this.mPro.setPro_estoq(rs.getInt("quant"));
+                this.mPro.setPro_imagen(rs.getBytes("foto"));
+                this.mPro.setPro_idfornecedor(rs.getInt("fkfornecedor"));
+            }
+        } catch (SQLException e) {
+
+        }
+        return this.mPro;
+    }
+    
+    public Object select(String nome) {
+        this.mPro = new ModelProduto();
+        String sql = "select * from produtos where nome = ?"; 
+        
+        PreparedStatement ps;
+
+        try {
+            //ps recebe o scrip sql
+            ps = this.con.prepareStatement(sql);
+            ps.setString(1, nome);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                this.mPro.setPro_id(rs.getInt("idprodutos"));
+                this.mPro.setPro_nome(rs.getString("nome"));
+                this.mPro.setPro_valor(rs.getDouble("valor"));
+                this.mPro.setPro_imagen(rs.getBytes("foto"));
             }
         } catch (SQLException e) {
 
@@ -117,7 +141,7 @@ public class ControllerProduto implements InterfaceCrud {
     public List select() {
         List<ModelProduto> ListPro = new ArrayList<ModelProduto>();
 
-        String sql = "select * from tab_cadproduto"; 
+        String sql = "select * from produtos"; 
         
         PreparedStatement ps;
 
@@ -126,18 +150,20 @@ public class ControllerProduto implements InterfaceCrud {
             ps = this.con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                this.mPro.setPro_id(rs.getInt("pro_id"));
-                this.mPro.setPro_nome(rs.getString("pro_nome"));
-                this.mPro.setPro_valor(rs.getDouble("pro_valor"));
-                this.mPro.setPro_estoq(rs.getInt("pro_quant"));
-                this.mPro.setPro_imagen(rs.getBytes("pro_foto"));
-                this.mPro.setPro_idfornecedor(rs.getInt("pro_idfornecedor"));
-                ListPro.add(mPro);
+                ModelProduto p = new ModelProduto();
+                p.setPro_id(rs.getInt("idprodutos"));
+                p.setPro_nome(rs.getString("nome"));
+                p.setPro_valor(rs.getDouble("valor"));
+                p.setPro_estoq(rs.getInt("quant"));
+                p.setPro_imagen(rs.getBytes("foto"));
+                p.setPro_idfornecedor(rs.getInt("fkfornecedor"));
+                ListPro.add(p);
             }
         } catch (SQLException e) {
-
+            JOptionPane.showMessageDialog(null, "Erro ao listar dados "+e);
         }
         return ListPro;
     }
     
+   
 }
