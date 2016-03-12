@@ -19,7 +19,6 @@ public class ModelCliente {
     private String cli_complemento;
     private String cli_bairro;//bairro do cliente
     private int cli_idcidade;//refente a chaves estrangeira do banco
-    private int cli_idestado;//refente a chaves estrangeira do banco
     private String cli_cep;//cep do cliente
     private String cli_telefone;//telefone do cliente
     private String cli_celular;//celular do cliente
@@ -91,14 +90,6 @@ public class ModelCliente {
 
     public void setCli_idcidade(int cli_idcidade) {
         this.cli_idcidade = cli_idcidade;
-    }
-
-    public int getCli_idestado() {
-        return cli_idestado;
-    }
-
-    public void setCli_idestado(int cli_idestado) {
-        this.cli_idestado = cli_idestado;
     }
 
     public String getCli_cep() {

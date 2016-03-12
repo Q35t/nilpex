@@ -35,7 +35,7 @@ public class ControllerClienteCidadeUf {
         List<ModelClienteCidadeUf> ListCliCiBaUf = new ArrayList<ModelClienteCidadeUf>();
         String sql = "SELECT cli.idclientes,cli.nome,cli.cpf,cli.email,cli.telefone,cli.celular,\n" +
                      "cli.endereco,cli.numcasa,cli.complemento,cli.bairro,cid.nome,est.uf, cli.cep\n" +
-                     "FROM clientes cli INNER JOIN cidades cid ON cli.fkcidade = cid.idcidades INNER JOIN estados est ON cli.fkestado = est.idestados";
+                     "FROM clientes cli INNER JOIN cidades cid ON cli.fkcidade = cid.idcidades INNER JOIN estados est ON est.idestados = cid.fkestado";
 
         try {
            

@@ -32,10 +32,10 @@ public class ControllerFornecedorCidadeUf {
     
     public List select() {
         List<ModelFornecedorCidadeUf> ListforCiBaUf = new ArrayList<ModelFornecedorCidadeUf>();
-        String sql = "SELECT f.idfornecedores,f.nome,f.cnpj_cpf,f.email,f.telefone,f.telcomercial,\n" +
+        String sql = "SELECT f.idfornecedores,f.nome,f.cpf,f.email,f.telefone,f.telcomercial,\n" +
                      "f.endereco,f.num,f.complemento,f.bairro,c.nome,e.uf,f.cep\n" +
                      "FROM fornecedores f INNER JOIN cidades c ON f.fkcidade = c.idcidades\n" +
-                     "INNER JOIN estados e ON f.fkestado = e.idestados";
+                     "INNER JOIN estados e ON e.idestados = c.fkestado";
         
          try {
            
@@ -49,7 +49,7 @@ public class ControllerFornecedorCidadeUf {
                 //para mEstado que mostra na tabela
                 this.mForCiBaUf.setId(rs.getInt("f.idfornecedores"));
                 this.mForCiBaUf.setNome(rs.getString("f.nome"));
-                this.mForCiBaUf.setCnpj_cpf(rs.getString("f.cnpj_cpf"));
+                this.mForCiBaUf.setCnpj_cpf(rs.getString("f.cpf"));
                 this.mForCiBaUf.setEmail(rs.getString("f.email"));
                 this.mForCiBaUf.setTelefone(rs.getString("f.telefone"));
                 this.mForCiBaUf.setTelcomercial(rs.getString("f.telcomercial"));

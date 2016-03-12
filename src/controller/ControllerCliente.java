@@ -38,8 +38,8 @@ public class ControllerCliente implements InterfaceCrud {
         //forçando sua conversao
         ModelCliente mCadCliente = (ModelCliente) o;
         //variavel sql recebe script de insercao de dados sql
-        String sql = "INSERT INTO  clientes (nome,cpf,email,endereco,numcasa,complemento,bairro,fkcidade,fkestado,cep,telefone,celular)"
-                + " values(?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO  clientes (nome,cpf,email,endereco,numcasa,complemento,bairro,fkcidade,cep,telefone,celular)"
+                + " values(?,?,?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement ps = this.con.prepareStatement(sql);
             ps.setString(1, mCadCliente.getCli_nome());
@@ -50,10 +50,9 @@ public class ControllerCliente implements InterfaceCrud {
             ps.setString(6, mCadCliente.getCli_complemento());
             ps.setString(7, mCadCliente.getCli_bairro());
             ps.setInt(8, mCadCliente.getCli_idcidade());
-            ps.setInt(9, mCadCliente.getCli_idestado());
-            ps.setString(10, mCadCliente.getCli_cep());
-            ps.setString(11, mCadCliente.getCli_telefone());
-            ps.setString(12, mCadCliente.getCli_celular());
+            ps.setString(9, mCadCliente.getCli_cep());
+            ps.setString(10, mCadCliente.getCli_telefone());
+            ps.setString(11, mCadCliente.getCli_celular());
             ps.execute();
 
             JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
@@ -72,7 +71,7 @@ public class ControllerCliente implements InterfaceCrud {
         //forçando sua conversao
         ModelCliente mCadCliente = (ModelCliente) o;
         //variavel sql recebe script de insercao de dados sql
-        String sql = "UPDATE clientes set nome = ?, cpf = ?, email = ?,endereco = ?,numcasa = ?, complemento = ?,bairro = ?,fkcidade = ?,fkestado = ?,cep = ?,telefone = ?,celular = ?"
+        String sql = "UPDATE clientes set nome = ?, cpf = ?, email = ?,endereco = ?,numcasa = ?, complemento = ?,bairro = ?,fkcidade = ?,cep = ?,telefone = ?,celular = ?"
                 + " where idclientes = ? ";
         try {
             PreparedStatement ps = this.con.prepareStatement(sql);
@@ -84,11 +83,10 @@ public class ControllerCliente implements InterfaceCrud {
             ps.setString(6, mCadCliente.getCli_complemento());
             ps.setString(7, mCadCliente.getCli_bairro());
             ps.setInt(8, mCadCliente.getCli_idcidade());
-            ps.setInt(9, mCadCliente.getCli_idestado());
-            ps.setString(10, mCadCliente.getCli_cep());
-            ps.setString(11, mCadCliente.getCli_telefone());
-            ps.setString(12, mCadCliente.getCli_celular());
-            ps.setInt(13, mCadCliente.getCli_id());
+            ps.setString(9, mCadCliente.getCli_cep());
+            ps.setString(10, mCadCliente.getCli_telefone());
+            ps.setString(11, mCadCliente.getCli_celular());
+            ps.setInt(12, mCadCliente.getCli_id());
             ps.execute();
 
             JOptionPane.showMessageDialog(null, "Os dados foram atualizado!");
@@ -148,7 +146,6 @@ public class ControllerCliente implements InterfaceCrud {
                 mCadCliente.setCli_complemento(rs.getString("complemento"));
                 mCadCliente.setCli_bairro(rs.getString("bairro"));
                 mCadCliente.setCli_idcidade(rs.getInt("fkCidade"));
-                mCadCliente.setCli_idestado(rs.getInt("fkestado"));
                 mCadCliente.setCli_cep(rs.getString("cep"));
                 mCadCliente.setCli_telefone(rs.getString("telefone"));
                 mCadCliente.setCli_celular(rs.getString("celular"));
@@ -187,7 +184,6 @@ public class ControllerCliente implements InterfaceCrud {
                 mCadCliente.setCli_complemento(rs.getString("complemento"));
                 mCadCliente.setCli_bairro(rs.getString("bairro"));
                 mCadCliente.setCli_idcidade(rs.getInt("fkCidade"));
-                mCadCliente.setCli_idestado(rs.getInt("fkestado"));
                 mCadCliente.setCli_cep(rs.getString("cep"));
                 mCadCliente.setCli_telefone(rs.getString("telefone"));
                 mCadCliente.setCli_celular(rs.getString("celular"));
@@ -226,7 +222,6 @@ public class ControllerCliente implements InterfaceCrud {
                 mCadCliente.setCli_complemento(rs.getString("complemento"));
                 mCadCliente.setCli_bairro(rs.getString("bairro"));
                 mCadCliente.setCli_idcidade(rs.getInt("fkCidade"));
-                mCadCliente.setCli_idestado(rs.getInt("fkestado"));
                 mCadCliente.setCli_cep(rs.getString("cep"));
                 mCadCliente.setCli_telefone(rs.getString("telefone"));
                 mCadCliente.setCli_celular(rs.getString("celular"));

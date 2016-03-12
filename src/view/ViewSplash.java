@@ -5,6 +5,7 @@
  */
 package view;
 
+import java.awt.Toolkit;
 import javax.swing.JDialog;
 
 /**
@@ -17,6 +18,7 @@ public class ViewSplash extends javax.swing.JFrame {
      * Creates new form ViewSplash
      */
     public ViewSplash() {
+        
         setUndecorated(true);
         initComponents();
         setLocationRelativeTo(null);
@@ -31,7 +33,7 @@ public class ViewSplash extends javax.swing.JFrame {
             public void run(){
                 for(int i = 0; i<=100; i++){
                     try{
-                        sleep(100);
+                        sleep(70);
                         jProgressBar1.setValue(i);
                         if(jProgressBar1.getValue() <= 25){
                             lbstatus.setText("Processando.........");
@@ -59,12 +61,13 @@ public class ViewSplash extends javax.swing.JFrame {
     
     
     private void dialoglogin(){
-        new ViewPrincipal().setVisible(true);
-        new ViewPrincipal().setFocusableWindowState(false);
+        //new ViewPrincipal().setVisible(true);
+        //new ViewPrincipal().setFocusableWindowState(false);
         ViewLogin log = new ViewLogin(this, true); 
         log.setModal(true);
         log.requestFocus();
         log.setVisible(true); 
+        
         
     }
 

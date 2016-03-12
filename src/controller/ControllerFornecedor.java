@@ -34,8 +34,8 @@ public class ControllerFornecedor implements InterfaceCrud {
     @Override
     public void insert(Object o) {
        this.mCadFornecedor = (ModelFornecedor) o;
-       String sql = "insert into fornecedores (nome,cnpj_cpf,email,endereco,num,complemento,bairro,fkcidade,fkestado,cep,telefone,telcomercial) values"
-               + "(?,?,?,?,?,?,?,?,?,?,?,?)";
+       String sql = "insert into fornecedores (nome,cpf,email,endereco,num,complemento,bairro,fkcidade,cep,telefone,telcomercial) values"
+               + "(?,?,?,?,?,?,?,?,?,?,?)";
        
        try{
            PreparedStatement ps = this.con.prepareStatement(sql);
@@ -47,10 +47,9 @@ public class ControllerFornecedor implements InterfaceCrud {
            ps.setString(6, this.mCadFornecedor.getFor_complemento());
            ps.setString(7, this.mCadFornecedor.getFor_bairro());
            ps.setInt(8, this.mCadFornecedor.getFor_idcidade());
-           ps.setInt(9, this.mCadFornecedor.getFor_idestado());
-           ps.setString(10,this.mCadFornecedor.getFor_cep() );
-           ps.setString(11,this.mCadFornecedor.getFor_telefone() );
-           ps.setString(12, this.mCadFornecedor.getFor_telcomercial());
+           ps.setString(9,this.mCadFornecedor.getFor_cep() );
+           ps.setString(10,this.mCadFornecedor.getFor_telefone() );
+           ps.setString(11, this.mCadFornecedor.getFor_telcomercial());
            ps.execute();
            JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
            
@@ -63,7 +62,7 @@ public class ControllerFornecedor implements InterfaceCrud {
     @Override
     public void update(Object o) {
        this.mCadFornecedor = (ModelFornecedor) o;
-       String sql = "update fornecedores set nome = ?,cnpj_cpf = ? ,email = ?,endereco = ?,num = ?,complemento = ?, bairro = ?,fkcidade = ?,fkestado = ?,cep = ?,telefone = ?,telcomercial = ? where idfornecedores=?";
+       String sql = "update fornecedores set nome = ?,cpf = ? ,email = ?,endereco = ?,num = ?,complemento = ?, bairro = ?,fkcidade = ?,cep = ?,telefone = ?,telcomercial = ? where idfornecedores=?";
        
        try{
            PreparedStatement ps = this.con.prepareStatement(sql);
@@ -75,11 +74,10 @@ public class ControllerFornecedor implements InterfaceCrud {
            ps.setString(6, this.mCadFornecedor.getFor_complemento());
            ps.setString(7, this.mCadFornecedor.getFor_bairro());
            ps.setInt(8, this.mCadFornecedor.getFor_idcidade());
-           ps.setInt(9, this.mCadFornecedor.getFor_idestado());
-           ps.setString(10,this.mCadFornecedor.getFor_cep() );
-           ps.setString(11,this.mCadFornecedor.getFor_telefone() );
-           ps.setString(12, this.mCadFornecedor.getFor_telcomercial());
-           ps.setInt(13, this.mCadFornecedor.getFor_id());
+           ps.setString(9,this.mCadFornecedor.getFor_cep() );
+           ps.setString(10,this.mCadFornecedor.getFor_telefone() );
+           ps.setString(11, this.mCadFornecedor.getFor_telcomercial());
+           ps.setInt(12, this.mCadFornecedor.getFor_id());
            ps.execute();
            JOptionPane.showMessageDialog(null, "Os dados foram atualizado!");;
            
@@ -126,14 +124,13 @@ public class ControllerFornecedor implements InterfaceCrud {
                 
                 // do banco de dados para preencher JComboBox
                 this.mCadFornecedor.setFor_nome(rs.getString("nome"));
-                this.mCadFornecedor.setFor_cnpj_cpf(rs.getString("cnpj_cpf"));
+                this.mCadFornecedor.setFor_cnpj_cpf(rs.getString("cpf"));
                 this.mCadFornecedor.setFor_email(rs.getString("email"));
                 this.mCadFornecedor.setFor_endereco(rs.getString("endereco"));
                 this.mCadFornecedor.setFor_num(rs.getString("num"));
                 this.mCadFornecedor.setFor_complemento(rs.getString("complemento"));
                 this.mCadFornecedor.setFor_bairro(rs.getString("bairro"));
                 this.mCadFornecedor.setFor_idcidade(rs.getInt("fkCidade"));
-                this.mCadFornecedor.setFor_idestado(rs.getInt("fkestado"));
                 this.mCadFornecedor.setFor_cep(rs.getString("cep"));
                 this.mCadFornecedor.setFor_telefone(rs.getString("telefone"));
                 this.mCadFornecedor.setFor_telcomercial(rs.getString("celular"));
@@ -196,14 +193,13 @@ public class ControllerFornecedor implements InterfaceCrud {
             while (rs.next()) {
                 ModelFornecedor mFor = new ModelFornecedor();
                 mFor.setFor_nome(rs.getString("nome"));
-                mFor.setFor_cnpj_cpf(rs.getString("cnpj_cpf"));
+                mFor.setFor_cnpj_cpf(rs.getString("cpf"));
                 mFor.setFor_email(rs.getString("email"));
                 mFor.setFor_endereco(rs.getString("endereco"));
                 mFor.setFor_num(rs.getString("num"));
                 mFor.setFor_complemento(rs.getString("complemento"));
                 mFor.setFor_bairro(rs.getString("bairro"));
                 mFor.setFor_idcidade(rs.getInt("fkCidade"));
-                mFor.setFor_idestado(rs.getInt("fkestado"));
                 mFor.setFor_cep(rs.getString("cep"));
                 mFor.setFor_telefone(rs.getString("telefone"));
                 mFor.setFor_telcomercial(rs.getString("telcomercial"));

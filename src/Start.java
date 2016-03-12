@@ -25,8 +25,8 @@ public class Start {
 			Properties props = new Properties();
 			props.put("logoString", " ");
                         props.put("windowDecoration","");
-			//AluminiumLookAndFeel.setCurrentTheme(props);
-                        //UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
+			AluminiumLookAndFeel.setCurrentTheme(props);
+                        UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
                         //SmartLookAndFeel.setCurrentTheme(props);
 			//UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
                         //TextureLookAndFeel.setCurrentTheme(props);
@@ -39,6 +39,8 @@ public class Start {
         } catch (Exception e) {
 	  e.printStackTrace();
         }
+        
+        System.out.println(System.getProperty("os.name"));
         new ViewSplash().setVisible(true);
 
         

@@ -15,6 +15,7 @@ public class ModelUsuario {
     private String nome;
     private String login;
     private String senhas;
+    private int fktipousuario;
 
     public int getIdusuarios() {
         return idusuarios;
@@ -46,6 +47,14 @@ public class ModelUsuario {
 
     public void setSenhas(String senhas) {
         this.senhas = senhas;
+    }
+
+    public int getFktipousuario() {
+        return fktipousuario;
+    }
+
+    public void setFktipousuario(int fktipousuario) {
+        this.fktipousuario = fktipousuario;
     }
     
     

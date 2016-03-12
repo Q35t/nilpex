@@ -20,7 +20,6 @@ public class ModelFornecedor {
     private String for_complemento;
     private String for_bairro;
     private int for_idcidade;
-    private int for_idestado;
     private String for_cep;
     private String for_telefone;
     private String for_telcomercial;
@@ -95,14 +94,6 @@ public class ModelFornecedor {
 
     public void setFor_idcidade(int for_idcidade) {
         this.for_idcidade = for_idcidade;
-    }
-
-    public int getFor_idestado() {
-        return for_idestado;
-    }
-
-    public void setFor_idestado(int for_idestado) {
-        this.for_idestado = for_idestado;
     }
 
     public String getFor_cep() {
